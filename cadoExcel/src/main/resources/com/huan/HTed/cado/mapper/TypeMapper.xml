@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.huan.HTed.cado.mapper.TypeMapper">
+    <resultMap id="BaseResultMap" type="com.huan.HTed.cado.dto.Type">
+        <result column="type_id" property="typeId" jdbcType="DECIMAL" />
+        <result column="type_name" property="typeName" jdbcType="VARCHAR" />
+    </resultMap>
+
+
+	<sql id="Base_Column_List">
+        c.card_id,c.card_name,c.card_image_path ,a.type_id,a.type_name
+    </sql>
+
+	<resultMap type="com.huan.HTed.cado.dto.Type" id="queryTypeInfoMap" extends="BaseResultMap">
+         <collection property="cardList"  ofType="com.huan.HTed.cado.dto.Card">
+         	 <id property="cardId"  column="card_id"/>
+             <result property="cardName" column="card_name" />
+             <result property="cardImagePath" column="card_image_path" />
+         </collection>
+    </resultMap> 
+    
+    
+	 <select id="queryTypeInfo" resultMap="queryTypeInfoMap" >
+	       	SELECT 
+	       		<include refid="Base_Column_List" />
+	       	FROM  
+	       		cado_type a,
+	       		cado_type_card_detail b ,
+	       		cado_card c 
+	       	<where>
+	       			 a.type_id = b.type_id 
+	       			 AND c.card_id = b.card_id
+	       	</where>
+	    </select>
+	    
+    
+</mapper>
