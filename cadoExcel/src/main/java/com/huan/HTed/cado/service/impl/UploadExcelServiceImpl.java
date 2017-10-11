@@ -156,79 +156,79 @@ public class UploadExcelServiceImpl extends BaseServiceImpl<Orders> implements I
 				ordersItem.setOrderNo(info);
 				break;
 			case 1:
-				orders.setBBranchName(info);
+				orders.setbBranchName(info);
 				break;
 			case 2:
-				orders.setCMerchantName(info);
+				orders.setcMerchantName(info);
 				break;
 			case 3:
-				orders.setDAuthorizedOperator(info);
+				orders.setdAuthorizedOperator(info);
 				break;
 			case 4:
-				orders.setEMarketingPersonnelCode(info);
+				orders.seteMarketingPersonnelCode(info);
 				break;
 			case 5:
-				orders.setFRecommendedPersonnelCode(info);
+				orders.setfRecommendedPersonnelCode(info);
 				break;
 			case 6:
-				orders.setGCustomerName(info);
+				orders.setgCustomerName(info);
 				break;
 			case 7:
-				orders.setHCardLastFourNumber(info);
+				orders.sethCardLastFourNumber(info);
 				break;
 			case 8:
-				orders.setICertificatesLastFiveNumber(info);
+				orders.setiCertificatesLastFiveNumber(info);
 				break;
 			case 9:
-				orders.setJContactNumber(info);
+				orders.setjContactNumber(info);
 				break;
 			case 10:
-				orders.setKTelphone(info);
+				orders.setkTelphone(info);
 				break;
 			case 11:
-				orders.setLDeliveryAddress(info);
+				orders.setlDeliveryAddress(info);
 				break;
 			case 12:
-				orders.setMZipCode(info);
+				orders.setmZipCode(info);
 				break;
 			case 13:
-				orders.setNInvoiceHeader(info);
+				orders.setnInvoiceHeader(info);
 				break;
 			case 14:
-				orders.setOCommodityNumber(info);
+				orders.setoCommodityNumber(info);
 				break;
 			case 15:
-				orders.setPCommodityPrice(info);
+				orders.setpCommodityPrice(info);
 				break;
 			case 16:
-				orders.setQApplicationNumber(info);
+				orders.setqApplicationNumber(info);
 				break;
 			case 17:
-				orders.setRAuthorizationCode(info);
+				orders.setrAuthorizationCode(info);
 				break;
 			case 18:
-				orders.setSProductNumber(info);
+				orders.setsProductNumber(info);
 				break;
 			case 19:
-				orders.setTCustomerOrderDate(info);
+				orders.settCustomerOrderDate(info);
 				break;
 			case 20:
-				orders.setUActualDeliveryDate(info);
+				orders.setuActualDeliveryDate(info);
 				break;
 			case 21:
-				orders.setVCourierNumber(info);
+				orders.setvCourierNumber(info);
 				break;
 			case 22:
-				orders.setWCourierServicesCompany(info);
+				orders.setwCourierServicesCompany(info);
 				break;
 			case 23:
-				orders.setXOverdueMark(info);
+				orders.setxOverdueMark(info);
 				break;
 			case 24:
-				orders.setYDeliveryFileCategory(info);
+				orders.setyDeliveryFileCategory(info);
 				break;
 			case 25:
-				orders.setZCardProduct(info);
+				orders.setzCardProduct(info);
 				break;
 			case 26:
 				orders.setAaNameOfAgent(info);

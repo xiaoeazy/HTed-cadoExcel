@@ -152,278 +152,277 @@ public class OrdersLog extends BaseDTO {
      @Length(max = 45)
      private String updateBz;
 
-
-     public void setOrderNo(String orderNo){
-         this.orderNo = orderNo;
-     }
-
-     public String getOrderNo(){
-         return orderNo;
-     }
-
-     public void setBBranchName(String bBranchName){
-         this.bBranchName = bBranchName;
-     }
-
-     public String getBBranchName(){
-         return bBranchName;
-     }
-
-     public void setCMerchantName(String cMerchantName){
-         this.cMerchantName = cMerchantName;
-     }
-
-     public String getCMerchantName(){
-         return cMerchantName;
-     }
-
-     public void setDAuthorizedOperator(String dAuthorizedOperator){
-         this.dAuthorizedOperator = dAuthorizedOperator;
-     }
-
-     public String getDAuthorizedOperator(){
-         return dAuthorizedOperator;
-     }
-
-     public void setEMarketingPersonnelCode(String eMarketingPersonnelCode){
-         this.eMarketingPersonnelCode = eMarketingPersonnelCode;
-     }
-
-     public String getEMarketingPersonnelCode(){
-         return eMarketingPersonnelCode;
-     }
-
-     public void setFRecommendedPersonnelCode(String fRecommendedPersonnelCode){
-         this.fRecommendedPersonnelCode = fRecommendedPersonnelCode;
-     }
-
-     public String getFRecommendedPersonnelCode(){
-         return fRecommendedPersonnelCode;
-     }
-
-     public void setGCustomerName(String gCustomerName){
-         this.gCustomerName = gCustomerName;
-     }
-
-     public String getGCustomerName(){
-         return gCustomerName;
-     }
-
-     public void setHCardLastFourNumber(String hCardLastFourNumber){
-         this.hCardLastFourNumber = hCardLastFourNumber;
-     }
-
-     public String getHCardLastFourNumber(){
-         return hCardLastFourNumber;
-     }
-
-     public void setICertificatesLastFiveNumber(String iCertificatesLastFiveNumber){
-         this.iCertificatesLastFiveNumber = iCertificatesLastFiveNumber;
-     }
-
-     public String getICertificatesLastFiveNumber(){
-         return iCertificatesLastFiveNumber;
-     }
-
-     public void setJContactNumber(String jContactNumber){
-         this.jContactNumber = jContactNumber;
-     }
-
-     public String getJContactNumber(){
-         return jContactNumber;
-     }
-
-     public void setKTelphone(String kTelphone){
-         this.kTelphone = kTelphone;
-     }
-
-     public String getKTelphone(){
-         return kTelphone;
-     }
-
-     public void setLDeliveryAddress(String lDeliveryAddress){
-         this.lDeliveryAddress = lDeliveryAddress;
-     }
-
-     public String getLDeliveryAddress(){
-         return lDeliveryAddress;
-     }
-
-     public void setMZipCode(String mZipCode){
-         this.mZipCode = mZipCode;
-     }
-
-     public String getMZipCode(){
-         return mZipCode;
-     }
-
-     public void setNInvoiceHeader(String nInvoiceHeader){
-         this.nInvoiceHeader = nInvoiceHeader;
-     }
-
-     public String getNInvoiceHeader(){
-         return nInvoiceHeader;
-     }
-
-     public void setOCommodityNumber(String oCommodityNumber){
-         this.oCommodityNumber = oCommodityNumber;
-     }
-
-     public String getOCommodityNumber(){
-         return oCommodityNumber;
-     }
-
-     public void setPCommodityPrice(String pCommodityPrice){
-         this.pCommodityPrice = pCommodityPrice;
-     }
-
-     public String getPCommodityPrice(){
-         return pCommodityPrice;
-     }
-
-     public void setQApplicationNumber(String qApplicationNumber){
-         this.qApplicationNumber = qApplicationNumber;
-     }
-
-     public String getQApplicationNumber(){
-         return qApplicationNumber;
-     }
-
-     public void setRAuthorizationCode(String rAuthorizationCode){
-         this.rAuthorizationCode = rAuthorizationCode;
-     }
-
-     public String getRAuthorizationCode(){
-         return rAuthorizationCode;
-     }
-
-     public void setSProductNumber(String sProductNumber){
-         this.sProductNumber = sProductNumber;
-     }
-
-     public String getSProductNumber(){
-         return sProductNumber;
-     }
-
-     public void setTCustomerOrderDate(String tCustomerOrderDate){
-         this.tCustomerOrderDate = tCustomerOrderDate;
-     }
-
-     public String getTCustomerOrderDate(){
-         return tCustomerOrderDate;
-     }
-
-     public void setUActualDeliveryDate(String uActualDeliveryDate){
-         this.uActualDeliveryDate = uActualDeliveryDate;
-     }
-
-     public String getUActualDeliveryDate(){
-         return uActualDeliveryDate;
-     }
-
-     public void setVCourierNumber(String vCourierNumber){
-         this.vCourierNumber = vCourierNumber;
-     }
-
-     public String getVCourierNumber(){
-         return vCourierNumber;
-     }
-
-     public void setWCourierServicesCompany(String wCourierServicesCompany){
-         this.wCourierServicesCompany = wCourierServicesCompany;
-     }
-
-     public String getWCourierServicesCompany(){
-         return wCourierServicesCompany;
-     }
-
-     public void setXOverdueMark(String xOverdueMark){
-         this.xOverdueMark = xOverdueMark;
-     }
-
-     public String getXOverdueMark(){
-         return xOverdueMark;
-     }
-
-     public void setYDeliveryFileCategory(String yDeliveryFileCategory){
-         this.yDeliveryFileCategory = yDeliveryFileCategory;
-     }
-
-     public String getYDeliveryFileCategory(){
-         return yDeliveryFileCategory;
-     }
-
-     public void setZCardProduct(String zCardProduct){
-         this.zCardProduct = zCardProduct;
-     }
-
-     public String getZCardProduct(){
-         return zCardProduct;
-     }
-
-     public void setAaNameOfAgent(String aaNameOfAgent){
-         this.aaNameOfAgent = aaNameOfAgent;
-     }
-
-     public String getAaNameOfAgent(){
-         return aaNameOfAgent;
-     }
-
-     public void setAbTelphoneOfAgent(String abTelphoneOfAgent){
-         this.abTelphoneOfAgent = abTelphoneOfAgent;
-     }
-
-     public String getAbTelphoneOfAgent(){
-         return abTelphoneOfAgent;
-     }
-
-     public void setAcOrderStatus(String acOrderStatus){
-         this.acOrderStatus = acOrderStatus;
-     }
-
-     public String getAcOrderStatus(){
-         return acOrderStatus;
-     }
-
-     public void setAdBz(String adBz){
-         this.adBz = adBz;
-     }
-
-     public String getAdBz(){
-         return adBz;
-     }
-
-     public void setAlBankFeedbackTime(String alBankFeedbackTime){
-         this.alBankFeedbackTime = alBankFeedbackTime;
-     }
-
-     public String getAlBankFeedbackTime(){
-         return alBankFeedbackTime;
-     }
-
-     public void setAmBankFeedbackType(String amBankFeedbackType){
-         this.amBankFeedbackType = amBankFeedbackType;
-     }
-
-     public String getAmBankFeedbackType(){
-         return amBankFeedbackType;
-     }
-
-     public void setAnBankFeedbackInstruction(String anBankFeedbackInstruction){
-         this.anBankFeedbackInstruction = anBankFeedbackInstruction;
-     }
-
-     public String getAnBankFeedbackInstruction(){
-         return anBankFeedbackInstruction;
-     }
-
-     public void setUpdateTime(Date updateTime){
-         this.updateTime = updateTime;
-     }
-
-     public Date getUpdateTime(){
-         return updateTime;
-     }
+     public String getOrderNo() {
+		return orderNo;
+	}
+
+	public void setOrderNo(String orderNo) {
+		this.orderNo = orderNo;
+	}
+
+	public String getbBranchName() {
+		return bBranchName;
+	}
+
+	public void setbBranchName(String bBranchName) {
+		this.bBranchName = bBranchName;
+	}
+
+	public String getcMerchantName() {
+		return cMerchantName;
+	}
+
+	public void setcMerchantName(String cMerchantName) {
+		this.cMerchantName = cMerchantName;
+	}
+
+	public String getdAuthorizedOperator() {
+		return dAuthorizedOperator;
+	}
+
+	public void setdAuthorizedOperator(String dAuthorizedOperator) {
+		this.dAuthorizedOperator = dAuthorizedOperator;
+	}
+
+	public String geteMarketingPersonnelCode() {
+		return eMarketingPersonnelCode;
+	}
+
+	public void seteMarketingPersonnelCode(String eMarketingPersonnelCode) {
+		this.eMarketingPersonnelCode = eMarketingPersonnelCode;
+	}
+
+	public String getfRecommendedPersonnelCode() {
+		return fRecommendedPersonnelCode;
+	}
+
+	public void setfRecommendedPersonnelCode(String fRecommendedPersonnelCode) {
+		this.fRecommendedPersonnelCode = fRecommendedPersonnelCode;
+	}
+
+	public String getgCustomerName() {
+		return gCustomerName;
+	}
+
+	public void setgCustomerName(String gCustomerName) {
+		this.gCustomerName = gCustomerName;
+	}
+
+	public String gethCardLastFourNumber() {
+		return hCardLastFourNumber;
+	}
+
+	public void sethCardLastFourNumber(String hCardLastFourNumber) {
+		this.hCardLastFourNumber = hCardLastFourNumber;
+	}
+
+	public String getiCertificatesLastFiveNumber() {
+		return iCertificatesLastFiveNumber;
+	}
+
+	public void setiCertificatesLastFiveNumber(String iCertificatesLastFiveNumber) {
+		this.iCertificatesLastFiveNumber = iCertificatesLastFiveNumber;
+	}
+
+	public String getjContactNumber() {
+		return jContactNumber;
+	}
+
+	public void setjContactNumber(String jContactNumber) {
+		this.jContactNumber = jContactNumber;
+	}
+
+	public String getkTelphone() {
+		return kTelphone;
+	}
+
+	public void setkTelphone(String kTelphone) {
+		this.kTelphone = kTelphone;
+	}
+
+	public String getlDeliveryAddress() {
+		return lDeliveryAddress;
+	}
+
+	public void setlDeliveryAddress(String lDeliveryAddress) {
+		this.lDeliveryAddress = lDeliveryAddress;
+	}
+
+	public String getmZipCode() {
+		return mZipCode;
+	}
+
+	public void setmZipCode(String mZipCode) {
+		this.mZipCode = mZipCode;
+	}
+
+	public String getnInvoiceHeader() {
+		return nInvoiceHeader;
+	}
+
+	public void setnInvoiceHeader(String nInvoiceHeader) {
+		this.nInvoiceHeader = nInvoiceHeader;
+	}
+
+	public String getoCommodityNumber() {
+		return oCommodityNumber;
+	}
+
+	public void setoCommodityNumber(String oCommodityNumber) {
+		this.oCommodityNumber = oCommodityNumber;
+	}
+
+	public String getpCommodityPrice() {
+		return pCommodityPrice;
+	}
+
+	public void setpCommodityPrice(String pCommodityPrice) {
+		this.pCommodityPrice = pCommodityPrice;
+	}
+
+	public String getqApplicationNumber() {
+		return qApplicationNumber;
+	}
+
+	public void setqApplicationNumber(String qApplicationNumber) {
+		this.qApplicationNumber = qApplicationNumber;
+	}
+
+	public String getrAuthorizationCode() {
+		return rAuthorizationCode;
+	}
+
+	public void setrAuthorizationCode(String rAuthorizationCode) {
+		this.rAuthorizationCode = rAuthorizationCode;
+	}
+
+	public String getsProductNumber() {
+		return sProductNumber;
+	}
+
+	public void setsProductNumber(String sProductNumber) {
+		this.sProductNumber = sProductNumber;
+	}
+
+	public String gettCustomerOrderDate() {
+		return tCustomerOrderDate;
+	}
+
+	public void settCustomerOrderDate(String tCustomerOrderDate) {
+		this.tCustomerOrderDate = tCustomerOrderDate;
+	}
+
+	public String getuActualDeliveryDate() {
+		return uActualDeliveryDate;
+	}
+
+	public void setuActualDeliveryDate(String uActualDeliveryDate) {
+		this.uActualDeliveryDate = uActualDeliveryDate;
+	}
+
+	public String getvCourierNumber() {
+		return vCourierNumber;
+	}
+
+	public void setvCourierNumber(String vCourierNumber) {
+		this.vCourierNumber = vCourierNumber;
+	}
+
+	public String getwCourierServicesCompany() {
+		return wCourierServicesCompany;
+	}
+
+	public void setwCourierServicesCompany(String wCourierServicesCompany) {
+		this.wCourierServicesCompany = wCourierServicesCompany;
+	}
+
+	public String getxOverdueMark() {
+		return xOverdueMark;
+	}
+
+	public void setxOverdueMark(String xOverdueMark) {
+		this.xOverdueMark = xOverdueMark;
+	}
+
+	public String getyDeliveryFileCategory() {
+		return yDeliveryFileCategory;
+	}
+
+	public void setyDeliveryFileCategory(String yDeliveryFileCategory) {
+		this.yDeliveryFileCategory = yDeliveryFileCategory;
+	}
+
+	public String getzCardProduct() {
+		return zCardProduct;
+	}
+
+	public void setzCardProduct(String zCardProduct) {
+		this.zCardProduct = zCardProduct;
+	}
+
+	public String getAaNameOfAgent() {
+		return aaNameOfAgent;
+	}
+
+	public void setAaNameOfAgent(String aaNameOfAgent) {
+		this.aaNameOfAgent = aaNameOfAgent;
+	}
+
+	public String getAbTelphoneOfAgent() {
+		return abTelphoneOfAgent;
+	}
+
+	public void setAbTelphoneOfAgent(String abTelphoneOfAgent) {
+		this.abTelphoneOfAgent = abTelphoneOfAgent;
+	}
+
+	public String getAcOrderStatus() {
+		return acOrderStatus;
+	}
+
+	public void setAcOrderStatus(String acOrderStatus) {
+		this.acOrderStatus = acOrderStatus;
+	}
+
+	public String getAdBz() {
+		return adBz;
+	}
+
+	public void setAdBz(String adBz) {
+		this.adBz = adBz;
+	}
+
+	public String getAlBankFeedbackTime() {
+		return alBankFeedbackTime;
+	}
+
+	public void setAlBankFeedbackTime(String alBankFeedbackTime) {
+		this.alBankFeedbackTime = alBankFeedbackTime;
+	}
+
+	public String getAmBankFeedbackType() {
+		return amBankFeedbackType;
+	}
+
+	public void setAmBankFeedbackType(String amBankFeedbackType) {
+		this.amBankFeedbackType = amBankFeedbackType;
+	}
+
+	public String getAnBankFeedbackInstruction() {
+		return anBankFeedbackInstruction;
+	}
+
+	public void setAnBankFeedbackInstruction(String anBankFeedbackInstruction) {
+		this.anBankFeedbackInstruction = anBankFeedbackInstruction;
+	}
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
 
 	public String getUpdateBz() {
 		return updateBz;
@@ -432,34 +431,34 @@ public class OrdersLog extends BaseDTO {
 	public void setUpdateBz(String updateBz) {
 		this.updateBz = updateBz;
 	}
-     
-     public void cloneOrders(Orders order){
+
+	public void cloneOrders(Orders order){
     	 this.setOrderNo(order.getOrderNo());
-    	 this.setBBranchName(order.getBBranchName());
-    	 this.setCMerchantName(order.getCMerchantName());
-    	 this.setDAuthorizedOperator(order.getDAuthorizedOperator());
-    	 this.setEMarketingPersonnelCode(order.getEMarketingPersonnelCode());
-    	 this.setFRecommendedPersonnelCode(order.getFRecommendedPersonnelCode());
-    	 this.setGCustomerName(order.getGCustomerName());
-    	 this.setHCardLastFourNumber(order.getHCardLastFourNumber());
-    	 this.setICertificatesLastFiveNumber(order.getICertificatesLastFiveNumber());
-    	 this.setJContactNumber(order.getJContactNumber());
-    	 this.setKTelphone(order.getKTelphone());
-    	 this.setLDeliveryAddress(order.getLDeliveryAddress());
-    	 this.setMZipCode(order.getMZipCode());
-    	 this.setNInvoiceHeader(order.getNInvoiceHeader()); 
-    	 this.setOCommodityNumber(order.getOCommodityNumber());
-    	 this.setPCommodityPrice(order.getPCommodityPrice());
-    	 this.setQApplicationNumber(order.getQApplicationNumber());
-    	 this.setRAuthorizationCode(order.getRAuthorizationCode());
-    	 this.setSProductNumber(order.getSProductNumber());
-    	 this.setTCustomerOrderDate(order.getTCustomerOrderDate());
-    	 this.setUActualDeliveryDate(order.getUActualDeliveryDate());
-    	 this.setVCourierNumber(order.getVCourierNumber());
-    	 this.setWCourierServicesCompany(order.getWCourierServicesCompany());
-    	 this.setXOverdueMark(order.getXOverdueMark());
-    	 this.setYDeliveryFileCategory(order.getYDeliveryFileCategory());
-    	 this.setZCardProduct(order.getZCardProduct());
+    	 this.setbBranchName(order.getbBranchName());
+    	 this.setcMerchantName(order.getcMerchantName());
+    	 this.setdAuthorizedOperator(order.getdAuthorizedOperator());
+    	 this.seteMarketingPersonnelCode(order.geteMarketingPersonnelCode());
+    	 this.setfRecommendedPersonnelCode(order.getfRecommendedPersonnelCode());
+    	 this.setgCustomerName(order.getgCustomerName());
+    	 this.sethCardLastFourNumber(order.gethCardLastFourNumber());
+    	 this.setiCertificatesLastFiveNumber(order.getiCertificatesLastFiveNumber());
+    	 this.setjContactNumber(order.getjContactNumber());
+    	 this.setkTelphone(order.getkTelphone());
+    	 this.setlDeliveryAddress(order.getlDeliveryAddress());
+    	 this.setmZipCode(order.getmZipCode());
+    	 this.setnInvoiceHeader(order.getnInvoiceHeader()); 
+    	 this.setoCommodityNumber(order.getoCommodityNumber());
+    	 this.setpCommodityPrice(order.getpCommodityPrice());
+    	 this.setqApplicationNumber(order.getqApplicationNumber());
+    	 this.setrAuthorizationCode(order.getrAuthorizationCode());
+    	 this.setsProductNumber(order.getsProductNumber());
+    	 this.settCustomerOrderDate(order.gettCustomerOrderDate());
+    	 this.setuActualDeliveryDate(order.getuActualDeliveryDate());
+    	 this.setvCourierNumber(order.getvCourierNumber());
+    	 this.setwCourierServicesCompany(order.getwCourierServicesCompany());
+    	 this.setxOverdueMark(order.getxOverdueMark());
+    	 this.setyDeliveryFileCategory(order.getyDeliveryFileCategory());
+    	 this.setzCardProduct(order.getzCardProduct());
     	 
     	 this.setAaNameOfAgent(order.getAaNameOfAgent());
     	 this.setAbTelphoneOfAgent(order.getAbTelphoneOfAgent());
