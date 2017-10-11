@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.huan.HTed.cado.mapper.OrdersMapper">
+    <resultMap id="BaseResultMap" type="com.huan.HTed.cado.dto.Orders">
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+        <result column="b_branch_name" property="bBranchName" jdbcType="VARCHAR" />
+        <result column="c_merchant_name" property="cMerchantName" jdbcType="VARCHAR" />
+        <result column="d_authorized_operator" property="dAuthorizedOperator" jdbcType="VARCHAR" />
+        <result column="e_marketing_personnel_code" property="eMarketingPersonnelCode" jdbcType="VARCHAR" />
+        <result column="f_recommended_personnel_code" property="fRecommendedPersonnelCode" jdbcType="VARCHAR" />
+        <result column="g_customer_name" property="gCustomerName" jdbcType="VARCHAR" />
+        <result column="h_card_last_four_number" property="hCardLastFourNumber" jdbcType="VARCHAR" />
+        <result column="i_certificates_last_five_number" property="iCertificatesLastFiveNumber" jdbcType="VARCHAR" />
+        <result column="j_contact_number" property="jContactNumber" jdbcType="VARCHAR" />
+        <result column="k_telphone" property="kTelphone" jdbcType="VARCHAR" />
+        <result column="l_delivery_address" property="lDeliveryAddress" jdbcType="VARCHAR" />
+        <result column="m_zip_code" property="mZipCode" jdbcType="VARCHAR" />
+        <result column="n_Invoice_header" property="nInvoiceHeader" jdbcType="VARCHAR" />
+        <result column="o_commodity_number" property="oCommodityNumber" jdbcType="VARCHAR" />
+        <result column="p_commodity_price" property="pCommodityPrice" jdbcType="VARCHAR" />
+        <result column="q_application_number" property="qApplicationNumber" jdbcType="VARCHAR" />
+        <result column="r_authorization_code" property="rAuthorizationCode" jdbcType="VARCHAR" />
+        <result column="s_product_number" property="sProductNumber" jdbcType="VARCHAR" />
+        <result column="t_customer_order_date" property="tCustomerOrderDate" jdbcType="VARCHAR" />
+        <result column="u_actual_delivery_date" property="uActualDeliveryDate" jdbcType="VARCHAR" />
+        <result column="v_courier_number" property="vCourierNumber" jdbcType="VARCHAR" />
+        <result column="w_courier_services_company" property="wCourierServicesCompany" jdbcType="VARCHAR" />
+        <result column="x_overdue_mark" property="xOverdueMark" jdbcType="VARCHAR" />
+        <result column="y_delivery_file_category" property="yDeliveryFileCategory" jdbcType="VARCHAR" />
+        <result column="z_card_product" property="zCardProduct" jdbcType="VARCHAR" />
+        <result column="aa_name_of_agent" property="aaNameOfAgent" jdbcType="VARCHAR" />
+        <result column="ab_telphone_of_agent" property="abTelphoneOfAgent" jdbcType="VARCHAR" />
+        <result column="ac_order_status" property="acOrderStatus" jdbcType="VARCHAR" />
+        <result column="ad_bz" property="adBz" jdbcType="VARCHAR" />
+        <result column="al_bank_feedback_time" property="alBankFeedbackTime" jdbcType="VARCHAR" />
+        <result column="am_bank_feedback_type" property="amBankFeedbackType" jdbcType="VARCHAR" />
+        <result column="an_bank_feedback_instruction" property="anBankFeedbackInstruction" jdbcType="VARCHAR" />
+        <result column="update_time" property="updateTime" jdbcType="DATE" />
+    </resultMap>
+
+
+</mapper>

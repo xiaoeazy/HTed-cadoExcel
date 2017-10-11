@@ -33,7 +33,7 @@
 	<script>
    
     $("#file-0").fileinput({
-        'allowedFileExtensions' : ['jpg', 'png','gif'],
+        'allowedFileExtensions' : ['xls', 'xlsx'],
     });
     
     
@@ -42,13 +42,13 @@
     $(document).ready(function() {
     	$(".fileinput-upload-button").click(function(){
     		
-    		    var image = $("#file-0").val();  
-    	        if ($.trim(image) == "") {  
-    	            alert("请选择图片！");  
+    		    var excel = $("#file-0").val();  
+    	        if ($.trim(excel) == "") {  
+    	            alert("请选择excel！");  
     	            return;  
     	        }  
     	        //提交请求处理的url  
-    	        var actionUrl = "${base.contextPath}/image/upload";  
+    	        var actionUrl = "${base.contextPath}/upload/excel";  
     	        //开始ajax操作  
     	        $("#form1").attr('submited',true).ajaxSubmit({  
     	                type: "POST",//提交类型  

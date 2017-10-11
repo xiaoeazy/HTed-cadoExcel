@@ -24,7 +24,7 @@
             obj = obj || {};
             if (options) {
                 obj.page = options.page;
-                obj.pagesize = options.pageSize;
+                obj.pageSize = options.pageSize;
                 if (options.sort && options.sort.length > 0) {
                     obj.sortname = options.sort[0].field;
                     obj.sortorder = options.sort[0].dir;

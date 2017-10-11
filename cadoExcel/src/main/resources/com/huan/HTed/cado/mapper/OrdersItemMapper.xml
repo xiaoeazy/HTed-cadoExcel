@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.huan.HTed.cado.mapper.OrdersItemMapper">
+    <resultMap id="BaseResultMap" type="com.huan.HTed.cado.dto.OrdersItem">
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+        <result column="ae_model" property="aeModel" jdbcType="VARCHAR" />
+        <result column="af_order_attribute" property="afOrderAttribute" jdbcType="VARCHAR" />
+        <result column="ag_logistics_name" property="agLogisticsName" jdbcType="VARCHAR" />
+        <result column="ah_logistics_no" property="ahLogisticsNo" jdbcType="VARCHAR" />
+        <result column="ai_delivery_time" property="aiDeliveryTime" jdbcType="VARCHAR" />
+        <result column="aj_bz" property="ajBz" jdbcType="VARCHAR" />
+        <result column="ak_order_batch" property="akOrderBatch" jdbcType="VARCHAR" />
+        <result column="update_time" property="updateTime" jdbcType="DATE" />
+    </resultMap>
+
+
+</mapper>
