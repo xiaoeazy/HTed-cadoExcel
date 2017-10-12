@@ -23,7 +23,7 @@ public class UserLoginInfoCollection implements IAuthenticationSuccessListener {
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response) {
-
+    	//记录登录信息
         String ipAddress = getIpAddress(request);
         UserLogin userLogin = new UserLogin();
         userLogin.setUserId((Long)request.getSession(false).getAttribute(User.FIELD_USER_ID));

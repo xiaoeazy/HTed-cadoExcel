@@ -18,8 +18,8 @@
     <!-- middleware datasource  -->
     <!-- jndi dataSource-->
     <bean id="dataSource" class="com.huan.HTed.core.JndiObjectFactoryBean">
-       <!--  <property name="jndiName" value="${db.jndiName}"/> -->
-       <property name="jndiName" value="java:comp/env/jdbc/cadoExcel_dev"/>
+        <property name="jndiName" value="${db.jndiName}"/> 
+        <!--<property name="jndiName" value="java:comp/env/jdbc/cadoExcel_dev"/>-->
     </bean>
 <!--     <bean id="messageSource" class="com.huan.HTed.core.i18n.CacheMessageSource"/>待定 -->
 

@@ -47,29 +47,31 @@ public class MonitorInterceptor extends HandlerInterceptorAdapter {
             if (StringUtils.isNotEmpty(tz)) {
                 TimeZoneUtil.setTimeZone(TimeZone.getTimeZone(tz));
             }
-        }else{
-        	System.out.println("path:"+request.getRequestURL());
-        	String path = request.getRequestURL().toString();
-        	if(path.indexOf("/lib/")!=-1){
-        		needPermission= false;
-        	}
-        	if(path.indexOf("/resources/")!=-1){
-        		needPermission= false;
-        	}
-        	if(path.endsWith("/login")){
-        		needPermission= false;
-        		validateUser(request,response);
-        	}
-        	if(path.endsWith("/api/")){
-        		needPermission= false;
-        	}
-//        	if(needPermission){
-//            	request.
-//            	getRequestDispatcher("/login").
-//            	forward(request,response);  
-//            	return false;
-//        	}
         }
+        
+    	System.out.println("path:"+request.getRequestURL());
+    	validateUser(request, response);//验证是不是请求是从登录页面进来的
+    	
+    	String path = request.getRequestURL().toString();
+    	if(path.indexOf("/lib/")!=-1){
+    		needPermission= false;
+    	}
+    	if(path.indexOf("/resources/")!=-1){
+    		needPermission= false;
+    	}
+    	if(path.endsWith("/login")){
+    		needPermission= false;
+    		validateUser(request,response);
+    	}
+    	if(path.endsWith("/api/")){
+    		needPermission= false;
+    	}
+    	if(needPermission){
+        	request.
+        	getRequestDispatcher("/login").
+        	forward(request,response);  
+        	return false;
+    	}
 //        SecurityTokenInterceptor.LOCAL_SECURITY_KEY.set(TokenUtils.getSecurityKey(session));待定
         return true;
     }
