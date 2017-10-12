@@ -80,7 +80,7 @@
                         data: 'rows',
                         total: 'total',
                         model: {
-                            id: "configId",
+                            id: "orderNo",
                             fields:{}
                         }
                     }
@@ -92,6 +92,7 @@ var grid = $("#grid").kendoGrid({
     resizable: true,
     scrollable: true,
     rownumber: false,
+    height: '100%',
     pageable: {
         pageSizes: [1,5, 10, 20, 50],
         refresh: true,

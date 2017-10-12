@@ -33,14 +33,14 @@ import java.util.List;
     @RequestMapping(value = "/orders/item/submit")
     @ResponseBody
 	public ResponseData update(@RequestBody List<OrdersItem> dto, BindingResult result, HttpServletRequest request){
-		getValidator().validate(dto, result);
-		if (result.hasErrors()) {
-			ResponseData responseData = new ResponseData(false);
-			responseData.setMessage(getErrorMessage(result, request));
-			return responseData;
-		}
+//		getValidator().validate(dto, result);
+//		if (result.hasErrors()) {
+//			ResponseData responseData = new ResponseData(false);
+//			responseData.setMessage(getErrorMessage(result, request));
+//			return responseData;
+//		}
         IRequest requestCtx = createRequestContext(request);
-        return new ResponseData(service.batchUpdate(requestCtx, dto));
+        return new ResponseData(service.update(requestCtx, dto));
     }
 
     @RequestMapping(value = "/orders/item/remove")

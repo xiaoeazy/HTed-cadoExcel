@@ -45,9 +45,6 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements IUserServi
         if (user1 == null) {
             throw new UserException(UserException.ERROR_USER_PASSWORD, UserException.ERROR_USER_PASSWORD, null);
         }
-        if (User.STATUS_LOCK.equals(user1.getStatus())) {
-            throw new UserException(UserException.ERROR_USER_EXPIRED, UserException.ERROR_USER_EXPIRED, null);
-        }
         if (user1.getStartActiveDate() != null && user1.getStartActiveDate().getTime() > System.currentTimeMillis()) {
             throw new UserException(UserException.ERROR_USER_EXPIRED, UserException.ERROR_USER_EXPIRED, null);
         }

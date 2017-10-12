@@ -12,6 +12,12 @@ import com.huan.HTed.message.profile.SystemConfigListener;
 public class PasswordManager  implements InitializingBean,SystemConfigListener {
 	private String defaultPassword = "123456";
 	
+	 // 密码长度
+    private Integer passwordMinLength = 8;
+    
+    // 密码复杂度
+    private String passwordComplexity = "no_limit";
+	
 	public boolean matches(String password1,String password2){
 		if(password1.equals(password2))
 			return true;
@@ -80,4 +86,22 @@ public class PasswordManager  implements InitializingBean,SystemConfigListener {
 		// TODO Auto-generated method stub
 		
 	}
+
+	public Integer getPasswordMinLength() {
+		return passwordMinLength;
+	}
+
+	public void setPasswordMinLength(Integer passwordMinLength) {
+		this.passwordMinLength = passwordMinLength;
+	}
+
+	public String getPasswordComplexity() {
+		return passwordComplexity;
+	}
+
+	public void setPasswordComplexity(String passwordComplexity) {
+		this.passwordComplexity = passwordComplexity;
+	}
+	
+	
 }

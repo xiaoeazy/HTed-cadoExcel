@@ -9,15 +9,14 @@
         <result column="PHONE" property="phone" jdbcType="VARCHAR" />
         <result column="START_ACTIVE_DATE" property="startActiveDate" javaType="DATE"/>
         <result column="END_ACTIVE_DATE" property="endActiveDate" javaType="DATE"/>
-        <result column="STATUS" property="status" jdbcType="VARCHAR" />
         <result column="LAST_PASSWORD_UPDATE_DATE" property="lastPasswordUpdateDate" javaType="DATE"/>
         <result column="LAST_LOGIN_DATE" property="lastLoginDate" javaType="DATE"/>
     </resultMap>
 
     
     <sql id="Base_Column_List">
-        USER_ID, USER_NAME,PASSWORD_ENCRYPTED, USER_TYPE, EMAIL, PHONE, START_ACTIVE_DATE,
-        END_ACTIVE_DATE, STATUS,LAST_PASSWORD_UPDATE_DATE,LAST_LOGIN_DATE
+        USER_ID, USER_NAME,PASSWORD_ENCRYPTED, EMAIL, PHONE, START_ACTIVE_DATE,
+        END_ACTIVE_DATE,LAST_PASSWORD_UPDATE_DATE,LAST_LOGIN_DATE
     </sql>
     <update id="updatePassword">
         update sys_user u

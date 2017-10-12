@@ -20,6 +20,28 @@
             });
         }
         
+
+        /**
+         * value:
+         *   输入的值
+         * temp:
+         *     当前去匹配那个正则表达式(no_limit digits_and_letters digits_and_case_letters)
+         *     no_limit:无限制
+         *     digits_and_letters:混合数字和字母
+         *     digits_and_case_letters:混合数字和大小写字母
+         * 返回类型为布尔型
+         *
+         * */
+        HTed.passwordFormat = function (value, temp) {
+            if (temp == 'no_limit') {
+                return true;
+            } else if (temp == "digits_and_letters") {
+                return /[a-zA-Z]/.test(value) && /\d/.test(value);
+            } else if (temp == "digits_and_case_letters") {
+                return /[a-z]/.test(value) && /[A-Z]/.test(value) && /\d/.test(value);
+            }
+        };
+        
         HTed.prepareQueryParameter = function (obj, options) {
             obj = obj || {};
             if (options) {

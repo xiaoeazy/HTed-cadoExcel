@@ -53,7 +53,6 @@ public class User extends BaseDTO {
     @Transient
     private String password;
 
-    private String userType;
 
     // 邮箱
     @JsonInclude(Include.NON_NULL)
@@ -72,10 +71,6 @@ public class User extends BaseDTO {
     @Condition(operator = "<=")
     private Date endActiveDate;
 
-    // 状态
-    @JsonInclude(Include.NON_NULL)
-    @Column
-    private String status;
     
     //最后一次登录时间
     @Column
@@ -93,10 +88,7 @@ public class User extends BaseDTO {
         return phone;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
+   
     public Long getUserId() {
         return userId;
     }
@@ -105,14 +97,8 @@ public class User extends BaseDTO {
         return userName;
     }
 
-    public String getUserType() {
-        return userType;
-    }
-
-    public void setUserType(String userType) {
-        this.userType = userType;
-    }
-
+ 
+  
     public void setEmail(String email) {
         this.email = email == null ? null : email.trim();
     }
@@ -121,9 +107,7 @@ public class User extends BaseDTO {
         this.phone = phone == null ? null : phone.trim();
     }
 
-    public void setStatus(String status) {
-        this.status = status == null ? null : status.trim();
-    }
+   
 
     public void setUserId(Long userId) {
         this.userId = userId;

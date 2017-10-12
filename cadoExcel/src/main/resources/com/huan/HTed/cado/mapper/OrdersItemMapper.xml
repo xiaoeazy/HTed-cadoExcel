@@ -14,5 +14,21 @@
         <result column="update_time" property="updateTime" jdbcType="DATE" />
     </resultMap>
 
-
+	<update id="update" parameterType="map">  
+        UPDATE cadoexcel_orders_item  
+        <trim prefix="set" suffixOverrides=",">
+		  <if test="ordersItem.orderNo!=null">order_no=#{ordersItem.orderNo},</if>
+		  <if test="ordersItem.aeModel!=null">ae_model=#{ordersItem.aeModel},</if>
+		  <if test="ordersItem.afOrderAttribute!=null">af_order_attribute=#{ordersItem.afOrderAttribute},</if>
+		  <if test="ordersItem.agLogisticsName!=null">ag_logistics_name=#{ordersItem.agLogisticsName},</if>
+		  <if test="ordersItem.ahLogisticsNo!=null">ah_logistics_no=#{ordersItem.ahLogisticsNo},</if>
+		  <if test="ordersItem.aiDeliveryTime!=null">ai_delivery_time=#{ordersItem.aiDeliveryTime},</if>
+		  <if test="ordersItem.ajBz!=null">aj_bz=#{ordersItem.ajBz},</if>
+		  <if test="ordersItem.akOrderBatch!=null">ak_order_batch=#{ordersItem.akOrderBatch},</if>
+		  <if test="ordersItem.updateTime!=null">update_time=#{ordersItem.updateTime},</if>
+		 </trim>
+         WHERE 
+         	order_no = #{oriOrdersItem.orderNo} 
+         	And update_time = #{oriOrdersItem.updateTime}     
+	</update>  
 </mapper>

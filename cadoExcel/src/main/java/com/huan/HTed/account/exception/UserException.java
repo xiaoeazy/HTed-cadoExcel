@@ -8,7 +8,7 @@ public class UserException extends BaseException {
     private static final long serialVersionUID = -3250576758107608016L;
 
     // 验证码不正确
-    public static final String ERROR_INVALID_CAPTCHA = "error.login.verification_code_error";
+    public static final String ERROR_INVALID_CAPTCHA = "验证码不正确";
 
     // 用户名密码不匹配
     public static final String ERROR_USER_PASSWORD = "error.login.name_password_not_match";
@@ -100,19 +100,19 @@ public class UserException extends BaseException {
     /**
      * 密码管理 - 修改密码 - 两次密码不能一致.
      */
-    public static final String USER_PASSWORD_NOT_SAME_TWICE = "error.password.not_same_twice";
+    public static final String USER_PASSWORD_NOT_SAME_TWICE = "两次密码不能一致";
     /**
      * 密码管理 - 修改密码 - 当前密码校验.
      */
-    public static final String USER_PASSWORD_WRONG = "error.password.current_password";
+    public static final String USER_PASSWORD_WRONG = "当前密码校验";
     /**
      * 密码管理 - 修改密码 - 密码格式不正确.
      */
-    public static final String USER_PASSWORD_REQUIREMENT = "error.user.password_format_error";
+    public static final String USER_PASSWORD_REQUIREMENT = "密码格式不正确";
     /**
      * 密码管理 - 修改密码 - 密码长度不能小于最小长度.
      */
-    public static final String USER_PASSWORD_LENGTH_INSUFFICIENT = "error.user.password_length_insufficient";
+    public static final String USER_PASSWORD_LENGTH_INSUFFICIENT = "密码长度不能小于最小长度";
     
     /**
      * 密码管理 - 修改密码 - 新密码不能与旧密码一致.
@@ -141,11 +141,11 @@ public class UserException extends BaseException {
     /**
      * 用户管理 - 临时口令已失效.
      */
-    public static final String TEMP_PASSWORD_EXPIRED = "error.user.temp_password_expired";
+    public static final String TEMP_PASSWORD_EXPIRED = "临时口令已失效";
     /**
      * 密码管理 - 忘记密码 - 请输入用户名.
      */
-    public static final String ENTER_USERNAME = "error.system.enter_username";
+    public static final String ENTER_USERNAME = "请输入用户名";
     /**
      * logger-日期格式捕获异常.
      */
