@@ -9,7 +9,7 @@ import com.huan.HTed.system.dto.BaseDTO;
  */
 public class UpdateFailedException extends BaseException {
 
-    public static final String MESSAGE_KEY = "error.record_not_exists_or_version_not_match";
+    public static final String MESSAGE_KEY = "记录不存在或者版本不匹配";
 
     protected UpdateFailedException(String code, String descriptionKey, Object[] parameters) {
         super(code, descriptionKey, parameters);

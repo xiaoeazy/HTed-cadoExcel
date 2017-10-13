@@ -19,7 +19,7 @@ public class PasswordManager  implements InitializingBean,SystemConfigListener {
     private String passwordComplexity = "no_limit";
 	
 	public boolean matches(String password1,String password2){
-		if(password1.equals(password2))
+		if(encode(password1).equals(password2))
 			return true;
 		else 
 			return false;

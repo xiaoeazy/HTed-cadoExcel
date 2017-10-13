@@ -30,7 +30,8 @@ public class DefaultAuthenticationSuccessListener implements IAuthenticationSucc
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response) {
         Locale locale = RequestContextUtils.getLocale(request);
-        User user = userService.selectByUserName("admin");
+        String username = request.getParameter("username");
+        User user = userService.selectByUserName(username);
         HttpSession session = request.getSession(true);
         session.setAttribute(User.FIELD_USER_ID, user.getUserId());
         session.setAttribute(User.FIELD_USER_NAME, user.getUserName());

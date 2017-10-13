@@ -2,8 +2,11 @@ package com.huan.HTed.cado.service.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -148,6 +151,43 @@ public class UploadExcelServiceImpl extends BaseServiceImpl<Orders> implements I
 		    iOrdersItemLogService.batchUpdate(requestCtx, excelOrdersItemLogList);
     }
 	
+	public Workbook makeExcel(IRequest requestCtx )throws Exception{
+		
+	    String columnNames[]={"订单编号","分行名称","商户名称","授权操作员","营销人员代码","推荐人员代码","客户姓名",
+				   "卡号末四位","证件号后五位","联系电话","手机","送货地址","邮编","发票抬头",
+				   "商品编号","商品价格(元)","申请编号","授权码","产品编号","客户订单日期","实际送货日期",
+				   "快递单号","快递公司","快递公司","送货文件类别","账户已激活卡片被保护",
+				   "代领人姓名","代领人姓名","订单状态","备注","型号","订单属性",
+				   "物流名称","物流单号","发货时间","备注说明","订单批次","银行反馈时间","银行反馈分类","银行反馈说明"};
+	    List<Orders> orderlist =   iOrdersService.queryAll(requestCtx);
+		List<Map<String, Object>> list = createExcelRecord(orderlist);
+		String keys[]  = {"time","notifyUser","beNotifiedUser","standardName","content","finish"};//map中的key
+		return ExcelUtil.createWorkBook(list, keys, columnNames);
+	}
+	
+	
+	private List<Map<String, Object>> createExcelRecord(List<Orders> OrdersList) {
+        List<Map<String, Object>> listmap = new ArrayList<Map<String, Object>>();
+//        Map<String, Object> map = new HashMap<String, Object>();
+//        map.put("sheetName", "sheet1");
+//        listmap.add(map);
+//        for (int j = 0; j < OrdersList.size(); j++) {
+//            Orders orders=OrdersList.get(j);
+//            Map<String, Object> mapValue = new HashMap<String, Object>();
+//            mapValue.put("time", orders.getTime());
+//            mapValue.put("notifyUser",orders.getNotifyUserNickname());
+//            mapValue.put("beNotifiedUser",orders.getBeNotifiedUserNickname());
+//            mapValue.put("standardName",orders.getStandardName());
+//            mapValue.put("content",orders.getContent());
+//            String finish=notify.getFinishFlag()+"";
+//            if (finish.equals("0")) finish="已纠错";
+//            else finish="未纠错";
+//            mapValue.put("finish",finish);
+//            listmap.add(mapValue);
+//        }
+//        return listmap;
+		return listmap;
+    }
 	
 	private void InfotoObject(Orders orders,OrdersItem ordersItem,int i,String info){
 		switch(i){

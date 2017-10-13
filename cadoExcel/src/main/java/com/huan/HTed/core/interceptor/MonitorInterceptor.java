@@ -42,17 +42,9 @@ public class MonitorInterceptor extends HandlerInterceptorAdapter {
         holder.set(System.currentTimeMillis());
         HttpSession session = request.getSession(false);
         boolean needPermission = true; // 资源文件  
-        if (session != null) {
-            String tz = (String) session.getAttribute(BaseConstants.PREFERENCE_TIME_ZONE);
-            if (StringUtils.isNotEmpty(tz)) {
-                TimeZoneUtil.setTimeZone(TimeZone.getTimeZone(tz));
-            }
-        }
         
-    	System.out.println("path:"+request.getRequestURL());
-    	validateUser(request, response);//验证是不是请求是从登录页面进来的
-    	
-    	String path = request.getRequestURL().toString();
+        System.out.println("path:"+request.getRequestURL());
+        String path = request.getRequestURL().toString();
     	if(path.indexOf("/lib/")!=-1){
     		needPermission= false;
     	}
@@ -66,12 +58,25 @@ public class MonitorInterceptor extends HandlerInterceptorAdapter {
     	if(path.endsWith("/api/")){
     		needPermission= false;
     	}
-    	if(needPermission){
-        	request.
-        	getRequestDispatcher("/login").
-        	forward(request,response);  
-        	return false;
-    	}
+        
+    	
+    	
+        if (session != null) {
+            String tz = (String) session.getAttribute(BaseConstants.PREFERENCE_TIME_ZONE);
+            if (StringUtils.isNotEmpty(tz)) {
+                TimeZoneUtil.setTimeZone(TimeZone.getTimeZone(tz));
+            }
+        }else{
+        	if(needPermission){
+            	request.
+            	getRequestDispatcher("/login").
+            	forward(request,response);  
+            	return false;
+        	}
+        	validateUser(request, response);//验证是不是请求是从登录页面进来的
+        }
+        
+    
 //        SecurityTokenInterceptor.LOCAL_SECURITY_KEY.set(TokenUtils.getSecurityKey(session));待定
         return true;
     }
@@ -82,7 +87,7 @@ public class MonitorInterceptor extends HandlerInterceptorAdapter {
     	if(username==null){
     		return ;
     	}
-    	 Map<String, IAuthenticationSuccessListener> listeners = applicationContext.getBeansOfType(IAuthenticationSuccessListener.class);
+    	 Map<String, IAuthenticationSuccessListener> listeners = applicationContext.getParent().getBeansOfType(IAuthenticationSuccessListener.class);
          List<IAuthenticationSuccessListener> list = new ArrayList<>();
          list.addAll(listeners.values());
          Collections.sort(list);

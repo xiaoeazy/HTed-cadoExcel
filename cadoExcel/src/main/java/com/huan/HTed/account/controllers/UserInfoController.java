@@ -63,7 +63,6 @@ public class UserInfoController extends BaseController {
     @RequestMapping(value = "/sys/um/updateUserInfo")
     public ResponseData updateUserInfo(HttpServletRequest request, @RequestBody User user) throws Exception {
         IRequest iRequest = createRequestContext(request);
-        iRequest.setUserId(10001l);
         user.setUserId(iRequest.getUserId());
         
         // 匹配电话格式.
@@ -86,7 +85,6 @@ public class UserInfoController extends BaseController {
     public ModelAndView userInfo(final HttpServletRequest request) throws UserException {
         ModelAndView mv = new ModelAndView(getViewPath() + "/sys/um/sys_user_info");
         IRequest requestContext = createRequestContext(request);
-        requestContext.setUserId(10001l);
         User user = userInfoService.selectUserByPrimaryKey(requestContext, requestContext.getUserId());
         Integer length = passwordManager.getPasswordMinLength();
         String  complexity = passwordManager.getPasswordComplexity();

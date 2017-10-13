@@ -6,6 +6,8 @@ import javax.persistence.Id;
 import com.huan.HTed.mybatis.annotation.ExtensionAttribute;
 import org.hibernate.validator.constraints.Length;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import com.huan.HTed.system.dto.BaseDTO;
 import java.util.Date;
 @ExtensionAttribute(disable=true)
@@ -148,6 +150,9 @@ public class Orders extends BaseDTO {
      private String anBankFeedbackInstruction;
 
      private Date updateTime;
+     
+     @Transient
+     private OrdersItem ordersItem;
      
      public String getOrderNo() {
 		return orderNo;
@@ -419,6 +424,16 @@ public class Orders extends BaseDTO {
 
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
+	}
+	
+	
+
+	public OrdersItem getOrdersItem() {
+		return ordersItem;
+	}
+
+	public void setOrdersItem(OrdersItem ordersItem) {
+		this.ordersItem = ordersItem;
 	}
 
 	public boolean isSame(Orders order){

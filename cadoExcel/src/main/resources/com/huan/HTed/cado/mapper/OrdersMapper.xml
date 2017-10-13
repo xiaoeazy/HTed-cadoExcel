@@ -39,5 +39,27 @@
         <result column="update_time" property="updateTime" jdbcType="DATE" />
     </resultMap>
 
-
+	<resultMap id="queryAllResultMap" type="com.huan.HTed.cado.dto.Orders" extends="BaseResultMap">
+        <association property="ordersItem" javaType="com.huan.HTed.cado.dto.OrdersItem"
+            resultMap="com.huan.HTed.cado.mapper.OrdersItemMapper.BaseResultMap"/>
+    </resultMap>
+    
+	 
+    <select id="queryAll" resultMap="queryAllResultMap" >
+       SELECT 
+       		a.order_no,b.ae_model,b.af_order_attribute,b.ag_logistics_name,b.ah_logistics_no,b.ai_delivery_time,b.aj_bz,b.ak_order_batch,b.update_time,
+       		a.b_branch_name,a.c_merchant_name,a.d_authorized_operator,a.e_marketing_personnel_code,a.f_recommended_personnel_code,a.g_customer_name,
+       		a.h_card_last_four_number,a.i_certificates_last_five_number,a.j_contact_number,a.k_telphone,a.l_delivery_address,a.m_zip_code,a.n_Invoice_header,
+       		a.o_commodity_number,a.p_commodity_price,a.q_application_number,a.r_authorization_code,a.s_product_number,a.t_customer_order_date,
+       		a.u_actual_delivery_date,a.v_courier_number,a.w_courier_services_company,a.x_overdue_mark,a.y_delivery_file_category,a.z_card_product,
+       		a.aa_name_of_agent,a.ab_telphone_of_agent,a.ac_order_status,a.ad_bz,
+       		a.al_bank_feedback_time,a.am_bank_feedback_type,a.an_bank_feedback_instruction
+       FROM 
+   			cadoexcel_orders a 
+       		
+       LEFT JOIN 
+       		cadoexcel_orders_item b
+	   ON 
+        	b.order_no = a.order_no 
+     </select>
 </mapper>

@@ -104,7 +104,7 @@ public class UserException extends BaseException {
     /**
      * 密码管理 - 修改密码 - 当前密码校验.
      */
-    public static final String USER_PASSWORD_WRONG = "当前密码校验";
+    public static final String USER_PASSWORD_WRONG = "当前密码校验错误";
     /**
      * 密码管理 - 修改密码 - 密码格式不正确.
      */
@@ -117,7 +117,7 @@ public class UserException extends BaseException {
     /**
      * 密码管理 - 修改密码 - 新密码不能与旧密码一致.
      */
-    public static final String USER_PASSWORD_SAME = "error.system.not_allowed_same_with_old_password";
+    public static final String USER_PASSWORD_SAME = "新密码不能与旧密码一致";
     /**
      * 用户管理 - 个人信息 - 用户名不存在.
      */

@@ -49,4 +49,11 @@ import java.util.List;
         service.batchDelete(dto);
         return new ResponseData();
     }
+    
+    @RequestMapping(value = "/orders/queryall")
+    @ResponseBody
+    public ResponseData queryall(HttpServletRequest request) {
+        IRequest requestContext = createRequestContext(request);
+        return new ResponseData(service.queryAll(requestContext));
+    }
     }

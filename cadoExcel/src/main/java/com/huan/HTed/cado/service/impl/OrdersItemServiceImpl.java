@@ -10,11 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.github.pagehelper.PageHelper;
+import com.huan.HTed.cado.dto.Orders;
 import com.huan.HTed.cado.dto.OrdersItem;
 import com.huan.HTed.cado.dto.OrdersItemLog;
 import com.huan.HTed.cado.mapper.OrdersItemMapper;
 import com.huan.HTed.cado.service.IOrdersItemLogService;
 import com.huan.HTed.cado.service.IOrdersItemService;
+import com.huan.HTed.cado.util.DateUtil;
 import com.huan.HTed.core.IRequest;
 import com.huan.HTed.core.exception.UpdateFailedException;
 import com.huan.HTed.system.dto.DTOStatus;
@@ -29,7 +32,7 @@ public class OrdersItemServiceImpl extends BaseServiceImpl<OrdersItem> implement
 				IOrdersItemLogService iOrdersItemLogService;
 				@Override
 				public List<OrdersItem> update(IRequest requestCtx ,List<OrdersItem> dtolist){
-					Date nowDate = new Date();
+					Date nowDate = DateUtil.getLocalDate();
 					for(OrdersItem ordersItem:dtolist){
 						Map<String,Object> map = new HashMap<String,Object>();
 						OrdersItem oriordersItem = new OrdersItem();
@@ -55,5 +58,10 @@ public class OrdersItemServiceImpl extends BaseServiceImpl<OrdersItem> implement
 					}
 					iOrdersItemLogService.batchUpdate(requestCtx, dtologlist);
 					return dtolist;
+				}
+				
+				public List<OrdersItem> queryForOrders(IRequest request, Orders condition, int pageNum, int pageSize){
+					PageHelper.startPage(pageNum, pageSize);
+			        return OrdersItemMapper.queryForOrders(condition);
 				}
 }

@@ -11,7 +11,7 @@
         <result column="ai_delivery_time" property="aiDeliveryTime" jdbcType="VARCHAR" />
         <result column="aj_bz" property="ajBz" jdbcType="VARCHAR" />
         <result column="ak_order_batch" property="akOrderBatch" jdbcType="VARCHAR" />
-        <result column="update_time" property="updateTime" jdbcType="DATE" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     </resultMap>
 
 	<update id="update" parameterType="map">  
@@ -25,10 +25,36 @@
 		  <if test="ordersItem.aiDeliveryTime!=null">ai_delivery_time=#{ordersItem.aiDeliveryTime},</if>
 		  <if test="ordersItem.ajBz!=null">aj_bz=#{ordersItem.ajBz},</if>
 		  <if test="ordersItem.akOrderBatch!=null">ak_order_batch=#{ordersItem.akOrderBatch},</if>
-		  <if test="ordersItem.updateTime!=null">update_time=#{ordersItem.updateTime},</if>
+		  <if test="ordersItem.updateTime!=null">update_time=#{ordersItem.updateTime,jdbcType=TIMESTAMP},</if>
 		 </trim>
          WHERE 
          	order_no = #{oriOrdersItem.orderNo} 
          	And update_time = #{oriOrdersItem.updateTime}     
 	</update>  
+	
+	
+	
+	<resultMap id="queryForOrdersResultMap" type="com.huan.HTed.cado.dto.OrdersItem" extends="BaseResultMap">
+        <association property="orders" javaType="com.huan.HTed.cado.dto.Orders"
+            resultMap="com.huan.HTed.cado.mapper.OrdersMapper.BaseResultMap"/>
+    </resultMap>
+    
+	 
+    <select id="queryForOrders" resultMap="queryForOrdersResultMap" parameterType="com.huan.HTed.cado.dto.Orders">
+       SELECT 
+       		a.order_no,a.ae_model,a.af_order_attribute,a.ag_logistics_name,a.ah_logistics_no,a.ai_delivery_time,a.aj_bz,a.ak_order_batch,a.update_time,
+       		b.g_customer_name,b.k_telphone,b.l_delivery_address,b.al_bank_feedback_time,b.am_bank_feedback_type,b.an_bank_feedback_instruction
+       FROM 
+       		cadoexcel_orders_item a
+       LEFT JOIN 
+       		cadoexcel_orders b 
+	   ON 
+        	a.order_no = b.order_no 
+       <where>
+       		<if test="alBankFeedbackTime != null">
+                 b.al_bank_feedback_time = #{alBankFeedbackTime}
+            </if>
+       </where>
+          
+     </select>
 </mapper>
