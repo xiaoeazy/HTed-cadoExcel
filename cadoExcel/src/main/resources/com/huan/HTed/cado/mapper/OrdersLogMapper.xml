@@ -2,7 +2,7 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.huan.HTed.cado.mapper.OrdersLogMapper">
-    <resultMap id="BaseResultMap" type="com.huan.HTed.cado.dto.OrdersLog">
+    <resultMap id="BaseResultMap" type="com.huan.HTed.cado.dto.OrdersLog" extends="com.huan.HTed.mapper.StdMapper.STD">
         <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
         <result column="b_branch_name" property="bBranchName" jdbcType="VARCHAR" />
         <result column="c_merchant_name" property="cMerchantName" jdbcType="VARCHAR" />

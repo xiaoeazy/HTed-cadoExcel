@@ -6,12 +6,14 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +25,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.huan.HTed.account.dto.User;
+import com.huan.HTed.cado.Listener.ProgressStatus;
+import com.huan.HTed.cado.Listener.UploadThread;
 import com.huan.HTed.cado.service.IUploadExcelService;
 import com.huan.HTed.cado.util.ExcelUtil;
 import com.huan.HTed.core.IRequest;
@@ -37,8 +40,32 @@ public class UploadExcelController extends BaseController{
     @Autowired
     private IUploadExcelService service;
 
+    private static int  i=0;
     
     
+//
+//    @RequestMapping(value="/upload/excel",method=RequestMethod.POST)  
+//    @ResponseBody
+//    public ResponseData fildUpload(HttpServletRequest request,@RequestParam(value="file",required=false) MultipartFile file){  
+//        //基本表单  
+//    	ResponseData rd = new ResponseData();
+//        try {
+//			String pathRoot = request.getSession().getServletContext().getRealPath("");  
+//			String path="";  
+//			if(!file.isEmpty()){  
+//				IRequest requestCtx = createRequestContext(request);
+//				service.fildUpload(requestCtx,file);
+//			}
+//			rd.setSuccess(true);
+//			rd.setMessage(path);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			logger.error("上传出错"+e.getMessage());
+//			rd.setSuccess(false);
+//			rd.setMessage(e.getMessage());
+//		}  
+//        return rd;
+//    }  
     
 
     @RequestMapping(value="/upload/excel",method=RequestMethod.POST)  
@@ -51,17 +78,39 @@ public class UploadExcelController extends BaseController{
 			String path="";  
 			if(!file.isEmpty()){  
 				IRequest requestCtx = createRequestContext(request);
-				service.fildUpload(requestCtx,file);
+				//service.fildUpload(requestCtx,file);
+				HttpSession session = request.getSession();
+
+		    	System.out.println("上传sessionId:"+session.getId());
+				ProgressStatus progressStatus = new ProgressStatus();
+				session.setAttribute("upload_progress", progressStatus);
+				
+				String excelName = getExcelName(file); //读取excel中的数据
+				Thread t = new Thread(new UploadThread(requestCtx,session,service, file.getInputStream(),excelName, progressStatus));
+		    	t.start();
+		    	System.out.println(progressStatus.getStatus());
 			}
 			rd.setSuccess(true);
 			rd.setMessage(path);
 		} catch (Exception e) {
+			e.printStackTrace();
 			logger.error("上传出错"+e.getMessage());
 			rd.setSuccess(false);
 			rd.setMessage(e.getMessage());
 		}  
         return rd;
     }  
+    
+    private String  getExcelName(MultipartFile file) throws IOException, Exception {
+	   
+		 //获得文件类型（可以判断如果不是图片，禁止上传）  
+	    String contentType=file.getContentType();  
+	    //获得文件名
+	    String excelName=file.getOriginalFilename();
+	    System.out.println(contentType);
+	    System.out.println(excelName);
+	    return excelName;
+    }
     
     
     @RequestMapping(value="/upload/download",produces = {"application/vnd.ms-excel;charset=UTF-8"})
@@ -70,7 +119,7 @@ public class UploadExcelController extends BaseController{
         	IRequest requestCtx = createRequestContext(request);
             String fileName="浦发自助平台Cado订单银行反馈信息表_auto";
             ByteArrayOutputStream os = new ByteArrayOutputStream();
-            service.makeExcel(requestCtx);
+            service.makeExcel(requestCtx).write(os); //生成excel写入文件流
             byte[] content = os.toByteArray();
             InputStream is = new ByteArrayInputStream(content);
             // 设置response参数，可以打开下载页面
@@ -103,5 +152,17 @@ public class UploadExcelController extends BaseController{
         return null;
     }
    
+    
+    @RequestMapping(value="/upload/getFileUploadProgress",method=RequestMethod.POST)  
+    @ResponseBody
+    public ResponseData getFileUploadProgress(HttpServletRequest request){  
+    	HttpSession session = request.getSession();
+    	System.out.println("进度sessionId:"+session.getId());
+		ProgressStatus p = (ProgressStatus)session.getAttribute("upload_progress");
+		System.out.println(p.getStatus()+"  "+p.getProgress());
+		List<ProgressStatus> list = new ArrayList<ProgressStatus>();
+		list.add(p);
+        return new ResponseData(list);
+    }  
   
 }

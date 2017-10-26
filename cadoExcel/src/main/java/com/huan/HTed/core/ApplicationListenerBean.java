@@ -20,8 +20,6 @@ public class ApplicationListenerBean implements ApplicationListener {
         if (event instanceof ContextRefreshedEvent) {
             ApplicationContext applicationContext = ((ContextRefreshedEvent) event).getApplicationContext();
             Map<String, AppContextInitListener> beanMap = applicationContext.getBeansOfType(AppContextInitListener.class);
-            
-            Map<String, IAuthenticationSuccessListener> listeners = applicationContext.getBeansOfType(IAuthenticationSuccessListener.class);
             beanMap.forEach((k, v) -> {
                 v.contextInitialized(applicationContext);
             });

@@ -29,6 +29,25 @@
                     
                     
                 </div>
+                
+                
+                
+               <div class="modal fade" data-backdrop="static" tabindex="-1" id="progressbar"> 
+                                            <!--窗口声明：--> 
+                                            <div class="modal-dialog modal-lg"> 
+                                                <!-- 内容声明 --> 
+                                                <div class="modal-content"> 
+                                                    <!-- 主体 --> 
+                                                    <div class="modal-body"> 
+                                                        <div class="progress progress-striped active"> 
+                                                           <div id="test" class="progress-bar progress-bar-success" role="progressbar" style="width: 0%;"> 
+                                                               			0%
+                                                           </div> 
+                                                        </div> 
+                                                    </div> 
+                                                </div> 
+                                            </div> 
+              </div> 
     </body>
 	<script>
    
@@ -39,6 +58,42 @@
     
     
     
+//     $(document).ready(function() {
+//     	$(".fileinput-upload-button").click(function(){
+    		
+//     		    var excel = $("#file-0").val();  
+//     	        if ($.trim(excel) == "") {  
+//     	            alert("请选择excel！");  
+//     	            return;  
+//     	        }  
+//     	        //提交请求处理的url  
+//     	        var actionUrl = "${base.contextPath}/upload/excel";  
+//     	        //开始ajax操作  
+//     	        $("#form1").attr('submited',true).ajaxSubmit({  
+//     	                type: "POST",//提交类型  
+//     	                dataType: "json",//返回结果格式  
+//     	                url: actionUrl,//请求地址  
+//     	              //  data: { "file": image },//请求数据  
+//     	                success: function (data) {//请求成功后的函数 
+//     	                	if(data.success){
+//     	                		var path = "${base.contextPath}"+data.message;
+//     	                		window.parent.$("#cardImagePathShow").attr('src',path);
+    	                		
+//     	                		window.parent.viewModel.model.set("cardImagePath", data.message);
+//     	                		window.parent.$("#dialog").data("kendoWindow").close();
+    	                		
+//     	                	}
+//     	                },  
+//     	                error: function (data) {
+//     	                	alert(data.message);
+//     	                },//请求失败的函数  
+//     	                async: true  
+    	           
+//     	        }); 
+//     	        return false;
+//     	})
+//     });
+	var processId ="";
     $(document).ready(function() {
     	$(".fileinput-upload-button").click(function(){
     		
@@ -57,12 +112,9 @@
     	              //  data: { "file": image },//请求数据  
     	                success: function (data) {//请求成功后的函数 
     	                	if(data.success){
-    	                		var path = "${base.contextPath}"+data.message;
-    	                		window.parent.$("#cardImagePathShow").attr('src',path);
-    	                		
-    	                		window.parent.viewModel.model.set("cardImagePath", data.message);
-    	                		window.parent.$("#dialog").data("kendoWindow").close();
-    	                		
+    	                		   $('#progressbar').modal({backdrop: 'static', keyboard: false});
+    	                		   processId=setInterval("startProgress()",2000);
+    	                		   startProgress();
     	                	}
     	                },  
     	                error: function (data) {
@@ -74,5 +126,43 @@
     	        return false;
     	})
     });
+    
+    
+   
+   
+    function startProgress(){ 
+  	  $.ajax({
+          type   : 'POST',
+          url    : '${base.contextPath}/upload/getFileUploadProgress',
+          dataType : "json",
+          contentType : "application/json",
+          success: function (data) {
+        	var dataProgress = data.rows[0];
+          	if(dataProgress.success==true){
+					if(dataProgress.progress==100){
+							disabledProgress();
+					}else{
+						$("#test").html(dataProgress.status);
+						$("#test").width(dataProgress.progress+"%");
+					}
+          	}else{
+          		  disabledProgress();
+          		  alert(dataProgress.status);
+          	}
+          },
+          error:function(data){
+        	  disabledProgress();
+          }
+      });
+    } 
+   
+    
+    function disabledProgress(){
+    	$("#test").html("") ;
+		$("#test").width("0%");
+		$('#progressbar').modal('hide');
+		clearInterval(processId);
+		
+    }
 	</script>
 </html>

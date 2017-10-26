@@ -1,5 +1,6 @@
 <#include "../include/header.html">
-<body>
+<body> 
+	
 	<script>
 	var  viewModel = kendo.observable({
 	    model: {
@@ -39,6 +40,12 @@
 	    },
 	    saveFunction: function(){
 	    	 $("#grid").data('kendoGrid').saveChanges();
+        },
+        queryFunction:function(){
+        	$('#grid').data('kendoGrid').dataSource.page(1);
+        },
+        downloadFunction:function(){
+        	window.open("${base.contextPath}/upload/download")
         }
 	});
 	
@@ -47,26 +54,45 @@
 	
 	<div id="dialogDetail"></div>
 	<div id="dialogAllDetail"></div>
-	<div id="page-content">
+	<div id="page-content" style="margin-top: 20px">
 		
-	   <form class="form-horizontal" style="width:550px">
+	   <form class="form-horizontal" style="width:100%">
 		  	<div class="col-xs-12" style="margin-top: 5px">
                 <div class="form-group">
-                    <label class="col-xs-4 col-xs-offset-1 control-label"
+                 	<label class="col-xs-1 col-xs-offset-1 control-label"
+                           style="text-align: right">订单编号</label>
+                    <div class="col-xs-3">
+                     	<input type="text" data-bind="value:model.orderNo" style="width:100%"
+                                       class="k-textbox" placeholder="订单编号" />
+                     </div>
+                    <label class="col-xs-1 col-xs-offset-1 control-label"
                            style="text-align: right">银行反馈时间</label>
-                    <div class="col-xs-6">
-                       <input style="width: 100%;" data-role="datepicker" data-bind="value:model.alBankFeedbackTime" class="k-datepicker" /> 
+                    <div class="col-xs-3">
+<!--                        <input style="width: 100%;" data-role="datepicker" data-bind="value:model.alBankFeedbackTime" class="k-datepicker" />  -->
+						<input type="text" data-bind="value:model.alBankFeedbackTime" style="width:100%" class="k-textbox" placeholder="银行反馈时间" />
                     </div>
                 </div>
             </div>
-		  
+<!-- 		  <div class="col-xs-12" style="margin-top: 5px"> -->
+<!--                 <div class="form-group"> -->
+<!--                     <label class="col-xs-1 col-xs-offset-1 control-label" -->
+<!--                            style="text-align: right">订单编号</label> -->
+<!--                     <div class="col-xs-3"> -->
+<!--                      	<input type="text" data-bind="value:model.orderNo" style="width:100%" -->
+<!--                                        class="k-textbox" placeholder="订单编号" /> -->
+<!--                      </div> -->
+<!--                 </div> -->
+<!--             </div> -->
 		  <div class="col-xs-12" style="margin-top: -5px">
                 <div class="form-group">
-                    <div class="col-xs-6" style="float:right">
+                    <div class="col-xs-12" style="float:right">
                         <span id="saveForm" class="btn btn-success k-grid-save-changes"
                               style="float:center;margin-right:5px;"
                               data-bind="click:queryFunction">查询</span>
+                              <span class="btn btn-success k-grid-save-changes"  style="float:left;margin-right:5px;" data-bind="click:saveFunction">保存</span>
+                              <span class="btn btn-success k-grid-save-changes"  style="float:left;margin-right:5px;" data-bind="click:downloadFunction">下载生成Excel</span>
                     </div>
+                    
                 </div>
             </div>
 	  </form>
@@ -94,7 +120,7 @@
                 {
                     transport: {
                         read: {
-                            url: '${base.contextPath}/orders/item/query',
+                            url: '${base.contextPath}/orders/item/queryForOrders',
                             type: "GET",
                             dataType: "json"
                         },

@@ -53,6 +53,7 @@ public class OrdersItemServiceImpl extends BaseServiceImpl<OrdersItem> implement
 						ordersitemLog.cloneOrdersItem(ordersItem);
 						ordersitemLog.setUpdateTime(nowDate);
 						ordersitemLog.setUpdateBz("修改");
+						ordersitemLog.setUpdatePerson(requestCtx.getUserId());
 						ordersitemLog.set__status(DTOStatus.ADD);
 						dtologlist.add(ordersitemLog);
 					}
@@ -60,8 +61,13 @@ public class OrdersItemServiceImpl extends BaseServiceImpl<OrdersItem> implement
 					return dtolist;
 				}
 				
-				public List<OrdersItem> queryForOrders(IRequest request, Orders condition, int pageNum, int pageSize){
+				public List<OrdersItem> queryForOrders(IRequest request, Orders condition, OrdersItem condition2, int pageNum, int pageSize){
 					PageHelper.startPage(pageNum, pageSize);
-			        return OrdersItemMapper.queryForOrders(condition);
+					if(condition.getAlBankFeedbackTime()!=null){
+						 return OrdersItemMapper.queryForOrders(condition);
+					}else{
+						return this.select(request, condition2);
+					}
+			       
 				}
 }

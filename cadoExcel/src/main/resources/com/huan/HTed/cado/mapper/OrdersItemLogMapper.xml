@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.huan.HTed.cado.mapper.OrdersItemLogMapper">
-    <resultMap id="BaseResultMap" type="com.huan.HTed.cado.dto.OrdersItemLog">
+<mapper namespace="com.huan.HTed.cado.mapper.OrdersItemLogMapper" >
+    <resultMap id="BaseResultMap" type="com.huan.HTed.cado.dto.OrdersItemLog" extends="com.huan.HTed.mapper.StdMapper.STD">
         <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
         <result column="ae_model" property="aeModel" jdbcType="VARCHAR" />
         <result column="af_order_attribute" property="afOrderAttribute" jdbcType="VARCHAR" />
@@ -13,6 +13,7 @@
         <result column="ak_order_batch" property="akOrderBatch" jdbcType="VARCHAR" />
         <result column="update_time" property="updateTime" jdbcType="DATE" />
         <result column="update_bz" property="updateBz" jdbcType="VARCHAR" />
+        <result column="update_person" property="updatePerson" jdbcType="DECIMAL" />
     </resultMap>
 
 

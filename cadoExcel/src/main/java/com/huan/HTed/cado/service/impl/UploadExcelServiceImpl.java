@@ -1,10 +1,13 @@
 package com.huan.HTed.cado.service.impl;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.huan.HTed.cado.Listener.ProgressStatus;
 import com.huan.HTed.cado.dto.Orders;
 import com.huan.HTed.cado.dto.OrdersItem;
 import com.huan.HTed.cado.dto.OrdersItemLog;
@@ -39,17 +43,22 @@ public class UploadExcelServiceImpl extends BaseServiceImpl<Orders> implements I
 	@Autowired
 	private IOrdersItemLogService iOrdersItemLogService;
 	
+	private void setProgressInfo(HttpSession session, String status,String progress){
+		ProgressStatus p = (ProgressStatus)session.getAttribute("upload_progress");
+		p.setStatus(status);
+		p.setProgress(progress);
+		session.setAttribute("upload_progress",p);
+	}
 	
-	public void fildUpload(IRequest requestCtx ,MultipartFile file) throws Exception{
-		    Date updateUpdate = new Date();
-			 //获得文件类型（可以判断如果不是图片，禁止上传）  
-		    String contentType=file.getContentType();  
-		    //获得文件名
-		    String excelName=file.getOriginalFilename();
-		    System.out.println(contentType);
-		    System.out.println(excelName);
+	public void fildUpload(IRequest requestCtx  ,HttpSession session,InputStream fileInputStream,String excelName) throws Exception{
+		
+			setProgressInfo(session, ProgressStatus.START_UPLOAD, "10"); //设置状态
 		 	ExcelUtil excelUtil = new ExcelUtil();
-		    List<List<Object>> list =excelUtil.getBankListByExcel(file.getInputStream(), excelName);
+		    List<List<Object>> list =excelUtil.getBankListByExcel(fileInputStream, excelName);
+		
+		 	Date updateUpdate = new Date();
+		    System.out.println("===============读取数据完成===================");
+		    setProgressInfo(session, ProgressStatus.EXCEL_LOAD_END, "40"); //设置状态
 		    
 		    List<Orders> excelOrdersList = new ArrayList<Orders>();
 		    List<OrdersItem> excelOrdersItemList = new ArrayList<OrdersItem>();
@@ -58,7 +67,6 @@ public class UploadExcelServiceImpl extends BaseServiceImpl<Orders> implements I
 		    List<OrdersItemLog> excelOrdersItemLogList = new ArrayList<OrdersItemLog>();
 		    
 		    for(List<Object> innerlist:list){
-		    	System.out.println("=====================");
 		    	Orders orders = new Orders();
 		    	OrdersItem ordersItem = new OrdersItem();
 		    	int columnSize = innerlist.size();//一行记录多少列
@@ -91,13 +99,15 @@ public class UploadExcelServiceImpl extends BaseServiceImpl<Orders> implements I
 		    		if(!isSame){//如果数据时相同的就不做任何更新
 		    			order.set__status(DTOStatus.UPDATE);
 		    			order.setUpdateTime(updateUpdate);
+		    		}else{
+		    			order.set__status(DTOStatus.NOTHING);
 		    		}
 		    	}else{
 		    		order.set__status(DTOStatus.ADD);
 		    		order.setUpdateTime(updateUpdate);
 		    	}
 		    	
-		    	if(order.get__status()!=null){
+		    	if(!DTOStatus.NOTHING.equals(order.get__status())){
 		    		OrdersLog ordersLog = new OrdersLog();
 		    		ordersLog.cloneOrders(order);
 	    			ordersLog.set__status(DTOStatus.ADD);
@@ -126,13 +136,15 @@ public class UploadExcelServiceImpl extends BaseServiceImpl<Orders> implements I
 		    		if(!isSame){//如果数据时相同的就不做任何更新
 		    			orderItem.set__status(DTOStatus.UPDATE);
 		    			orderItem.setUpdateTime(updateUpdate);
+		    		}else{
+		    			orderItem.set__status(DTOStatus.NOTHING);
 		    		}
 		    	}else{
 		    		orderItem.set__status(DTOStatus.ADD);
 		    		orderItem.setUpdateTime(updateUpdate);
 		    	}
 		    	
-		    	if(orderItem.get__status()!=null){
+		    	if(!DTOStatus.NOTHING.equals(orderItem.get__status())){
 		    		OrdersItemLog ordersItemLog = new OrdersItemLog();
 		    		ordersItemLog.cloneOrdersItem(orderItem);
 		    		ordersItemLog.set__status(DTOStatus.ADD);
@@ -145,10 +157,17 @@ public class UploadExcelServiceImpl extends BaseServiceImpl<Orders> implements I
 	    			excelOrdersItemLogList.add(ordersItemLog);
 		    	}
 		    }
+		    
+		    System.out.println("===============开始插入==================");
+		    setProgressInfo(session, ProgressStatus.UPDATE_DATA, "80"); //设置状态
+		    
 		    iOrdersService.batchUpdate(requestCtx, excelOrdersList);
 		    iOrdersItemService.batchUpdate(requestCtx, excelOrdersItemList);
 		    iOrdersLogService.batchUpdate(requestCtx, excelOrdersLogList);
 		    iOrdersItemLogService.batchUpdate(requestCtx, excelOrdersItemLogList);
+		    
+		    System.out.println("===============插入结束==================");
+		    setProgressInfo(session, ProgressStatus.END_UPLOAD, "100"); //设置状态
     }
 	
 	public Workbook makeExcel(IRequest requestCtx )throws Exception{
@@ -160,33 +179,72 @@ public class UploadExcelServiceImpl extends BaseServiceImpl<Orders> implements I
 				   "代领人姓名","代领人姓名","订单状态","备注","型号","订单属性",
 				   "物流名称","物流单号","发货时间","备注说明","订单批次","银行反馈时间","银行反馈分类","银行反馈说明"};
 	    List<Orders> orderlist =   iOrdersService.queryAll(requestCtx);
-		List<Map<String, Object>> list = createExcelRecord(orderlist);
-		String keys[]  = {"time","notifyUser","beNotifiedUser","standardName","content","finish"};//map中的key
-		return ExcelUtil.createWorkBook(list, keys, columnNames);
+		List<Map<String, Object>> listmap = createExcelRecord(orderlist);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("sheetName", "sheet1");
+        listmap.add(map);
+		String keys[]  = {"orderNo","bBranchName","cMerchantName","dAuthorizedOperator","eMarketingPersonnelCode","fRecommendedPersonnelCode","gCustomerName",
+				"hCardLastFourNumber","iCertificatesLastFiveNumber","jContactNumber","kTelphone","lDeliveryAddress","mZipCode","nInvoiceHeader",
+				"oCommodityNumber","pCommodityPrice","qApplicationNumber","rAuthorizationCode","sProductNumber","tCustomerOrderDate","uActualDeliveryDate",
+				"vCourierNumber","wCourierServicesCompany","xOverdueMark","yDeliveryFileCategory","zCardProduct","aaNameOfAgent","abTelphoneOfAgent",
+				"acOrderStatus","adBz","aeModel","afOrderAttribute","agLogisticsName","ahLogisticsNo","aiDeliveryTime",
+				"ajBz","akOrderBatch","alBankFeedbackTime","amBankFeedbackType","anBankFeedbackInstruction"};//map中的key
+		return ExcelUtil.createWorkBook(listmap, keys, columnNames);
 	}
 	
 	
 	private List<Map<String, Object>> createExcelRecord(List<Orders> OrdersList) {
         List<Map<String, Object>> listmap = new ArrayList<Map<String, Object>>();
-//        Map<String, Object> map = new HashMap<String, Object>();
-//        map.put("sheetName", "sheet1");
-//        listmap.add(map);
-//        for (int j = 0; j < OrdersList.size(); j++) {
-//            Orders orders=OrdersList.get(j);
-//            Map<String, Object> mapValue = new HashMap<String, Object>();
-//            mapValue.put("time", orders.getTime());
-//            mapValue.put("notifyUser",orders.getNotifyUserNickname());
-//            mapValue.put("beNotifiedUser",orders.getBeNotifiedUserNickname());
-//            mapValue.put("standardName",orders.getStandardName());
-//            mapValue.put("content",orders.getContent());
-//            String finish=notify.getFinishFlag()+"";
-//            if (finish.equals("0")) finish="已纠错";
-//            else finish="未纠错";
-//            mapValue.put("finish",finish);
-//            listmap.add(mapValue);
-//        }
-//        return listmap;
-		return listmap;
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("sheetName", "sheet1");
+        listmap.add(map);
+        for (int j = 0; j < OrdersList.size(); j++) {
+            Orders orders=OrdersList.get(j);
+            Map<String, Object> mapValue = new HashMap<String, Object>();
+            mapValue.put("orderNo", orders.getOrderNo());
+            mapValue.put("bBranchName",orders.getbBranchName());
+            mapValue.put("cMerchantName",orders.getcMerchantName());
+            mapValue.put("dAuthorizedOperator",orders.getdAuthorizedOperator());
+            mapValue.put("eMarketingPersonnelCode",orders.geteMarketingPersonnelCode());
+            mapValue.put("fRecommendedPersonnelCode",orders.getfRecommendedPersonnelCode());
+            mapValue.put("gCustomerName",orders.getgCustomerName());
+            mapValue.put("hCardLastFourNumber",orders.gethCardLastFourNumber());
+            mapValue.put("iCertificatesLastFiveNumber",orders.getiCertificatesLastFiveNumber());
+            mapValue.put("jContactNumber",orders.getjContactNumber());
+            mapValue.put("kTelphone",orders.getkTelphone());
+            mapValue.put("lDeliveryAddress",orders.getlDeliveryAddress());
+            mapValue.put("mZipCode",orders.getmZipCode());
+            mapValue.put("nInvoiceHeader",orders.getnInvoiceHeader());
+            mapValue.put("oCommodityNumber",orders.getoCommodityNumber());
+            mapValue.put("pCommodityPrice",orders.getpCommodityPrice());
+            mapValue.put("qApplicationNumber",orders.getqApplicationNumber());
+            mapValue.put("rAuthorizationCode",orders.getrAuthorizationCode());
+            mapValue.put("sProductNumber",orders.getsProductNumber());
+            mapValue.put("tCustomerOrderDate",orders.gettCustomerOrderDate());
+            mapValue.put("uActualDeliveryDate",orders.getuActualDeliveryDate());
+            mapValue.put("vCourierNumber",orders.getvCourierNumber());
+            mapValue.put("wCourierServicesCompany",orders.getwCourierServicesCompany());
+            mapValue.put("xOverdueMark",orders.getxOverdueMark());
+            mapValue.put("yDeliveryFileCategory",orders.getyDeliveryFileCategory());
+            mapValue.put("zCardProduct",orders.getzCardProduct());
+            
+            mapValue.put("aaNameOfAgent",orders.getAaNameOfAgent());
+            mapValue.put("abTelphoneOfAgent",orders.getAbTelphoneOfAgent());
+            mapValue.put("acOrderStatus",orders.getAcOrderStatus());
+            mapValue.put("adBz",orders.getAdBz());
+            mapValue.put("aeModel",orders.getOrdersItem().getAeModel());
+            mapValue.put("afOrderAttribute",orders.getOrdersItem().getAfOrderAttribute());
+            mapValue.put("agLogisticsName",orders.getOrdersItem().getAgLogisticsName());
+            mapValue.put("ahLogisticsNo",orders.getOrdersItem().getAhLogisticsNo());
+            mapValue.put("aiDeliveryTime",orders.getOrdersItem().getAiDeliveryTime());
+            mapValue.put("ajBz",orders.getOrdersItem().getAjBz());
+            mapValue.put("akOrderBatch",orders.getOrdersItem().getAkOrderBatch());
+            mapValue.put("alBankFeedbackTime",orders.getAlBankFeedbackTime());
+            mapValue.put("amBankFeedbackType",orders.getAmBankFeedbackType());
+            mapValue.put("anBankFeedbackInstruction",orders.getAnBankFeedbackInstruction());
+            listmap.add(mapValue);
+        }
+        return listmap;
     }
 	
 	private void InfotoObject(Orders orders,OrdersItem ordersItem,int i,String info){

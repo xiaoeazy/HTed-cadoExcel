@@ -56,9 +56,9 @@ import com.huan.HTed.system.dto.ResponseData;
     
     @RequestMapping(value = "/orders/item/queryForOrders")
     @ResponseBody
-    public ResponseData queryForOrders(Orders dto, @RequestParam(defaultValue = DEFAULT_PAGE) int page,
+    public ResponseData queryForOrders(Orders dto, OrdersItem dto2 ,@RequestParam(defaultValue = DEFAULT_PAGE) int page,
         @RequestParam(defaultValue = DEFAULT_PAGE_SIZE) int pageSize, HttpServletRequest request) {
         IRequest requestContext = createRequestContext(request);
-        return new ResponseData(service.queryForOrders(requestContext,dto,page,pageSize));
+        return new ResponseData(service.queryForOrders(requestContext,dto,dto2,page,pageSize));
     }
     }

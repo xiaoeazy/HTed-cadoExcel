@@ -21,6 +21,7 @@ public class OrdersItemLog extends BaseDTO {
      public static final String FIELD_AJ_BZ = "ajBz";
      public static final String FIELD_AK_ORDER_BATCH = "akOrderBatch";
      public static final String FIELD_UPDATE_TIME = "updateTime";
+     public static final String FIELD_UPDATE_PERSON = "updatePerson";
 
 
      @Length(max = 14)
@@ -51,6 +52,8 @@ public class OrdersItemLog extends BaseDTO {
      
      @Length(max = 45)
      private String updateBz;
+     
+     private Long updatePerson;
 
 
      public void setOrderNo(String orderNo){
@@ -133,7 +136,16 @@ public class OrdersItemLog extends BaseDTO {
 		this.updateBz = updateBz;
 	}
 	
-	 public void cloneOrdersItem(OrdersItem ordersItem){
+	
+	 public Long getUpdatePerson() {
+		return updatePerson;
+	}
+
+	public void setUpdatePerson(Long updatePerson) {
+		this.updatePerson = updatePerson;
+	}
+
+	public void cloneOrdersItem(OrdersItem ordersItem){
     	 this.setOrderNo(ordersItem.getOrderNo());
     	 this.setAeModel(ordersItem.getAeModel());
     	 this.setAfOrderAttribute(ordersItem.getAfOrderAttribute());

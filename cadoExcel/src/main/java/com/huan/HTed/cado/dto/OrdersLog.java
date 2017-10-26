@@ -138,13 +138,13 @@ public class OrdersLog extends BaseDTO {
      @Length(max = 45)
      private String adBz;
 
-     @Length(max = 8)
+     @Length(max = 10)
      private String alBankFeedbackTime;
 
      @Length(max = 45)
      private String amBankFeedbackType;
 
-     @Length(max = 200)
+     @Length(max = 2000)
      private String anBankFeedbackInstruction;
 
      private Date updateTime;

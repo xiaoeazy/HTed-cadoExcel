@@ -132,21 +132,21 @@ public class OrdersItem extends BaseDTO {
      
      public boolean isSame(OrdersItem ordersItem){
     	 boolean flag =true;
-    	 if(getOrderNo().equals(ordersItem.getOrderNo()))
+    	 if(!getOrderNo().equals(ordersItem.getOrderNo()))
     		 return false;
-    	 if(getAeModel().equals(ordersItem.getAeModel()))
+    	 if(!getAeModel().equals(ordersItem.getAeModel()))
     		 return false;
-    	 if(getAfOrderAttribute().equals(ordersItem.getAfOrderAttribute()))
+    	 if(!getAfOrderAttribute().equals(ordersItem.getAfOrderAttribute()))
     		 return false;
-    	 if(getAgLogisticsName().equals(ordersItem.getAgLogisticsName()))
+    	 if(!getAgLogisticsName().equals(ordersItem.getAgLogisticsName()))
     		 return false;
-    	 if(getAhLogisticsNo().equals(ordersItem.getAhLogisticsNo()))
+    	 if(!getAhLogisticsNo().equals(ordersItem.getAhLogisticsNo()))
     		 return false;
-    	 if(getAiDeliveryTime().equals(ordersItem.getAiDeliveryTime()))
+    	 if(!getAiDeliveryTime().equals(ordersItem.getAiDeliveryTime()))
     		 return false;
-    	 if(getAjBz().equals(ordersItem.getAjBz()))
+    	 if(!getAjBz().equals(ordersItem.getAjBz()))
     		 return false;
-    	 if(getAkOrderBatch().equals(ordersItem.getAkOrderBatch()))
+    	 if(!getAkOrderBatch().equals(ordersItem.getAkOrderBatch()))
     		 return false;
     	 
     	 

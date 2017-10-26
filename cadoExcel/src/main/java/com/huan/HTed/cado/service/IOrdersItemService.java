@@ -11,5 +11,5 @@ import com.huan.HTed.system.service.IBaseService;
 public interface IOrdersItemService extends IBaseService<OrdersItem>, ProxySelf<IOrdersItemService>{
 	public List<OrdersItem> update(IRequest requestCtx ,List<OrdersItem> dto);
 	
-	public List<OrdersItem> queryForOrders(IRequest request, Orders condition, int pageNum, int pageSize);
+	public List<OrdersItem> queryForOrders(IRequest request, Orders condition, OrdersItem condition2, int pageNum, int pageSize);
 }

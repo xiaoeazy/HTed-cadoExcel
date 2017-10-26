@@ -23,4 +23,8 @@ public final class DTOStatus {
      * Liger UI 记录状态 - 删除.
      */
     public static final String DELETE = "delete";
+    /**
+     * Liger UI 记录状态 - 不做操作.
+     */
+    public static final String NOTHING = "nothing";
 }

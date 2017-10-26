@@ -13,7 +13,7 @@
 	
 	
 	</script>
-	
+	<script src="${base.contextPath}/sys/user/common/code?var=userNameList" type="text/javascript"></script>
 	<div id="page-content">
 	    <div style="clear:both">
         	<div id="grid"></div>
@@ -77,7 +77,18 @@ var grid = $("#grid").kendoGrid({
         {field: "ahLogisticsNo", title: '物流单号', width: 80},
         {field: "aiDeliveryTime", title: '发货时间', width: 50},
         {field: "ajBz", title: '备注说明', width: 80},
-        {field: "akOrderBatch", title: '订单批次', width: 50}
+        {field: "akOrderBatch", title: '订单批次', width: 50},
+        {field: "updatePerson", title: '修改人', width: 50,
+        	template:function(dataItem){
+        		  var v="";
+        		  $.each(userNameList, function (i, n) {
+                      if ((n.userId || '') == (dataItem.updatePerson || '')) {
+                          v = n.userName;
+                      }
+                  })
+                  return v;
+        	}
+        }
     ]
 }).data("kendoGrid");
 

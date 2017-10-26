@@ -8,7 +8,7 @@
     <context:property-placeholder location="classpath:config.properties"/>
 
     <bean id="cookieHttpSessionStrategy" class="org.springframework.session.web.http.CookieHttpSessionStrategy">
-        <property name="cookieName" value="SESSIONID_HAP"/>
+        <property name="cookieName" value="SESSIONID_HTED"/>
     </bean>
 
     <bean id="defaultPageConfiguration" class="com.huan.HTed.security.DefaultConfiguration"/>

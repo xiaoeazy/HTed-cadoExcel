@@ -140,13 +140,13 @@ public class Orders extends BaseDTO {
      @Length(max = 45)
      private String adBz;
 
-     @Length(max = 8)
+     @Length(max = 10)
      private String alBankFeedbackTime;
 
      @Length(max = 45)
      private String amBankFeedbackType;
 
-     @Length(max = 200)
+     @Length(max = 2000)
      private String anBankFeedbackInstruction;
 
      private Date updateTime;
@@ -438,72 +438,72 @@ public class Orders extends BaseDTO {
 
 	public boolean isSame(Orders order){
     	 boolean flag =true;
-    	 if(getOrderNo().equals(order.getOrderNo()))
+    	 if(!getOrderNo().equals(order.getOrderNo()))
     		 return false;
-    	 if(getbBranchName().equals(order.getbBranchName()))
+    	 if(!getbBranchName().equals(order.getbBranchName()))
     		 return false;
-    	 if(getcMerchantName().equals(order.getcMerchantName()))
+    	 if(!getcMerchantName().equals(order.getcMerchantName()))
     		 return false;
-    	 if(getdAuthorizedOperator().equals(order.getdAuthorizedOperator()))
+    	 if(!getdAuthorizedOperator().equals(order.getdAuthorizedOperator()))
     		 return false;
-    	 if(geteMarketingPersonnelCode().equals(order.geteMarketingPersonnelCode()))
+    	 if(!geteMarketingPersonnelCode().equals(order.geteMarketingPersonnelCode()))
     		 return false;
-    	 if(getfRecommendedPersonnelCode().equals(order.getfRecommendedPersonnelCode()))
+    	 if(!getfRecommendedPersonnelCode().equals(order.getfRecommendedPersonnelCode()))
     		 return false;
-    	 if(getgCustomerName().equals(order.getgCustomerName()))
+    	 if(!getgCustomerName().equals(order.getgCustomerName()))
     		 return false;
-    	 if(gethCardLastFourNumber().equals(order.gethCardLastFourNumber()))
+    	 if(!gethCardLastFourNumber().equals(order.gethCardLastFourNumber()))
     		 return false;
-    	 if(getiCertificatesLastFiveNumber().equals(order.getiCertificatesLastFiveNumber()))
+    	 if(!getiCertificatesLastFiveNumber().equals(order.getiCertificatesLastFiveNumber()))
     		 return false;
-    	 if(getjContactNumber().equals(order.getjContactNumber()))
+    	 if(!getjContactNumber().equals(order.getjContactNumber()))
     		 return false;
-    	 if(getkTelphone().equals(order.getkTelphone()))
+    	 if(!getkTelphone().equals(order.getkTelphone()))
     		 return false;
-    	 if(getlDeliveryAddress().equals(order.getlDeliveryAddress()))
+    	 if(!getlDeliveryAddress().equals(order.getlDeliveryAddress()))
     		 return false;
-    	 if(getmZipCode().equals(order.getmZipCode()))
+    	 if(!getmZipCode().equals(order.getmZipCode()))
     		 return false;
-    	 if(getnInvoiceHeader().equals(order.getnInvoiceHeader()))
+    	 if(!getnInvoiceHeader().equals(order.getnInvoiceHeader()))
     		 return false;
-    	 if(getoCommodityNumber().equals(order.getoCommodityNumber()))
+    	 if(!getoCommodityNumber().equals(order.getoCommodityNumber()))
     		 return false;
-    	 if(getpCommodityPrice().equals(order.getpCommodityPrice()))
+    	 if(!getpCommodityPrice().equals(order.getpCommodityPrice()))
     		 return false;
-    	 if(getqApplicationNumber().equals(order.getqApplicationNumber()))
+    	 if(!getqApplicationNumber().equals(order.getqApplicationNumber()))
     		 return false;
-    	 if(getrAuthorizationCode().equals(order.getrAuthorizationCode()))
+    	 if(!getrAuthorizationCode().equals(order.getrAuthorizationCode()))
     		 return false;
-    	 if(getsProductNumber().equals(order.getsProductNumber()))
+    	 if(!getsProductNumber().equals(order.getsProductNumber()))
     		 return false;
-    	 if(gettCustomerOrderDate().equals(order.gettCustomerOrderDate()))
+    	 if(!gettCustomerOrderDate().equals(order.gettCustomerOrderDate()))
     		 return false;
-    	 if(getuActualDeliveryDate().equals(order.getuActualDeliveryDate()))
+    	 if(!getuActualDeliveryDate().equals(order.getuActualDeliveryDate()))
     		 return false;
-    	 if(getvCourierNumber().equals(order.getvCourierNumber()))
+    	 if(!getvCourierNumber().equals(order.getvCourierNumber()))
     		 return false;
-    	 if(getwCourierServicesCompany().equals(order.getwCourierServicesCompany()))
+    	 if(!getwCourierServicesCompany().equals(order.getwCourierServicesCompany()))
     		 return false;
-    	 if(getxOverdueMark().equals(order.getxOverdueMark()))
+    	 if(!getxOverdueMark().equals(order.getxOverdueMark()))
     		 return false;
-    	 if(getyDeliveryFileCategory().equals(order.getyDeliveryFileCategory()))
+    	 if(!getyDeliveryFileCategory().equals(order.getyDeliveryFileCategory()))
     		 return false;
-    	 if(getzCardProduct().equals(order.getzCardProduct()))
+    	 if(!getzCardProduct().equals(order.getzCardProduct()))
     		 return false;
     	 
-    	 if(getAaNameOfAgent().equals(order.getAaNameOfAgent()))
+    	 if(!getAaNameOfAgent().equals(order.getAaNameOfAgent()))
     		 return false;
-    	 if(getAbTelphoneOfAgent().equals(order.getAbTelphoneOfAgent()))
+    	 if(!getAbTelphoneOfAgent().equals(order.getAbTelphoneOfAgent()))
     		 return false;
-    	 if(getAcOrderStatus().equals(order.getAcOrderStatus()))
+    	 if(!getAcOrderStatus().equals(order.getAcOrderStatus()))
     		 return false;
-    	 if(getAdBz().equals(order.getAdBz()))
+    	 if(!getAdBz().equals(order.getAdBz()))
     		 return false;
-    	 if(getAlBankFeedbackTime().equals(order.getAlBankFeedbackTime()))
+    	 if(!getAlBankFeedbackTime().equals(order.getAlBankFeedbackTime()))
     		 return false;
-    	 if(getAmBankFeedbackType().equals(order.getAmBankFeedbackType()))
+    	 if(!getAmBankFeedbackType().equals(order.getAmBankFeedbackType()))
     		 return false;
-    	 if(getAnBankFeedbackInstruction().equals(order.getAnBankFeedbackInstruction()))
+    	 if(!getAnBankFeedbackInstruction().equals(order.getAnBankFeedbackInstruction()))
     		 return false;
 //    	 getCMerchantName
 //    	 getDAuthorizedOperator

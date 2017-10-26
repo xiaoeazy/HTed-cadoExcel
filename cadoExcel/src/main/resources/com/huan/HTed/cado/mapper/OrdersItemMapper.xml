@@ -2,7 +2,7 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.huan.HTed.cado.mapper.OrdersItemMapper">
-    <resultMap id="BaseResultMap" type="com.huan.HTed.cado.dto.OrdersItem">
+    <resultMap id="BaseResultMap" type="com.huan.HTed.cado.dto.OrdersItem" extends="com.huan.HTed.mapper.StdMapper.STD">
         <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
         <result column="ae_model" property="aeModel" jdbcType="VARCHAR" />
         <result column="af_order_attribute" property="afOrderAttribute" jdbcType="VARCHAR" />
@@ -42,8 +42,8 @@
 	 
     <select id="queryForOrders" resultMap="queryForOrdersResultMap" parameterType="com.huan.HTed.cado.dto.Orders">
        SELECT 
-       		a.order_no,a.ae_model,a.af_order_attribute,a.ag_logistics_name,a.ah_logistics_no,a.ai_delivery_time,a.aj_bz,a.ak_order_batch,a.update_time,
-       		b.g_customer_name,b.k_telphone,b.l_delivery_address,b.al_bank_feedback_time,b.am_bank_feedback_type,b.an_bank_feedback_instruction
+       		a.order_no,a.ae_model,a.af_order_attribute,a.ag_logistics_name,a.ah_logistics_no,a.ai_delivery_time,a.aj_bz,a.ak_order_batch,a.update_time
+       		<!-- b.g_customer_name,b.k_telphone,b.l_delivery_address,b.al_bank_feedback_time,b.am_bank_feedback_type,b.an_bank_feedback_instruction -->
        FROM 
        		cadoexcel_orders_item a
        LEFT JOIN 
@@ -53,6 +53,9 @@
        <where>
        		<if test="alBankFeedbackTime != null">
                  b.al_bank_feedback_time = #{alBankFeedbackTime}
+            </if>
+            <if test="orderNo != null">
+                 b.order_no = #{orderNo}
             </if>
        </where>
           
