@@ -6,14 +6,15 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpSession;
 
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.huan.HTed.cado.Listener.ProgressStatus;
 import com.huan.HTed.cado.dto.Orders;
@@ -33,7 +34,14 @@ import com.huan.HTed.system.service.impl.BaseServiceImpl;
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class UploadExcelServiceImpl extends BaseServiceImpl<Orders> implements IUploadExcelService{
+	private static final int CAPTCHA_EXPIRE = 60 * 5;
 	
+	public static final String UPLOAD_PROGRESS = "upload_progress";
+	/**
+     * 过期时间,默认5分钟.
+     */
+    private Integer expire = CAPTCHA_EXPIRE;
+    
 	@Autowired
 	private IOrdersService iOrdersService;
 	@Autowired
@@ -42,23 +50,43 @@ public class UploadExcelServiceImpl extends BaseServiceImpl<Orders> implements I
 	private IOrdersItemService iOrdersItemService;
 	@Autowired
 	private IOrdersItemLogService iOrdersItemLogService;
+	@Autowired
+    private RedisTemplate<String, String> redisTemplate;
+	   /**
+     * @return 过期时间,单位秒
+     */
+    public Integer getExpire() {
+        return expire;
+    }
+
+    /**
+     *
+     * @param expire
+     *            过期时间
+     */
+    public void setExpire(Integer expire) {
+        this.expire = expire;
+    }
 	
-	private void setProgressInfo(HttpSession session, String status,String progress){
-		ProgressStatus p = (ProgressStatus)session.getAttribute("upload_progress");
-		p.setStatus(status);
-		p.setProgress(progress);
-		session.setAttribute("upload_progress",p);
+	private void setProgressInfo(IRequest requestCtx,ProgressStatus progressStatus, String status,String progress){
+		progressStatus.setStatus(status);
+		progressStatus.setProgress(progress);
+//		redisTemplate.opsForValue().set(session.getId() + ":" +UPLOAD_PROGRESS , progressStatus, getExpire(), TimeUnit.SECONDS);
+		redisTemplate.opsForHash().put(UPLOAD_PROGRESS,requestCtx.getUserId()+"",progressStatus.getSuccess()+":"+progressStatus.getProgress()+":"+progressStatus.getStatus()); //将对象存入redis
 	}
 	
-	public void fildUpload(IRequest requestCtx  ,HttpSession session,InputStream fileInputStream,String excelName) throws Exception{
-		
-			setProgressInfo(session, ProgressStatus.START_UPLOAD, "10"); //设置状态
+	public void startFileUpload(IRequest requestCtx ,ProgressStatus progressStatus, String status,String progress){
+		setProgressInfo(requestCtx,progressStatus, status, progress);
+	}
+	
+	public void fildUpload(IRequest requestCtx  ,ProgressStatus progressStatus,InputStream fileInputStream,String excelName) throws Exception{
+			setProgressInfo(requestCtx,progressStatus, ProgressStatus.START_UPLOAD, "10"); //设置状态
 		 	ExcelUtil excelUtil = new ExcelUtil();
 		    List<List<Object>> list =excelUtil.getBankListByExcel(fileInputStream, excelName);
 		
 		 	Date updateUpdate = new Date();
 		    System.out.println("===============读取数据完成===================");
-		    setProgressInfo(session, ProgressStatus.EXCEL_LOAD_END, "40"); //设置状态
+		    setProgressInfo(requestCtx,progressStatus, ProgressStatus.EXCEL_LOAD_END, "20"); //设置状态
 		    
 		    List<Orders> excelOrdersList = new ArrayList<Orders>();
 		    List<OrdersItem> excelOrdersItemList = new ArrayList<OrdersItem>();
@@ -79,10 +107,11 @@ public class UploadExcelServiceImpl extends BaseServiceImpl<Orders> implements I
 		    	excelOrdersList.add(orders);
 		    	excelOrdersItemList.add(ordersItem);
 	    	}
-		    
+		    setProgressInfo(requestCtx,progressStatus, ProgressStatus.DATA_LOAD_END, "30"); //设置状态
 		    List<Orders> databaseOrdersList = iOrdersService.selectAll(requestCtx);
 		    List<OrdersItem> databaseOrdersItemList = iOrdersItemService.selectAll(requestCtx);
 		    
+		    setProgressInfo(requestCtx,progressStatus, ProgressStatus.DATA_LOAD_END, "50"); //设置状态
 		    for(Orders order :excelOrdersList){
 		    	boolean isHave = false;
 		    	Orders item = null;
@@ -159,7 +188,7 @@ public class UploadExcelServiceImpl extends BaseServiceImpl<Orders> implements I
 		    }
 		    
 		    System.out.println("===============开始插入==================");
-		    setProgressInfo(session, ProgressStatus.UPDATE_DATA, "80"); //设置状态
+		    setProgressInfo(requestCtx,progressStatus, ProgressStatus.UPDATE_DATA, "80"); //设置状态
 		    
 		    iOrdersService.batchUpdate(requestCtx, excelOrdersList);
 		    iOrdersItemService.batchUpdate(requestCtx, excelOrdersItemList);
@@ -167,7 +196,7 @@ public class UploadExcelServiceImpl extends BaseServiceImpl<Orders> implements I
 		    iOrdersItemLogService.batchUpdate(requestCtx, excelOrdersItemLogList);
 		    
 		    System.out.println("===============插入结束==================");
-		    setProgressInfo(session, ProgressStatus.END_UPLOAD, "100"); //设置状态
+		    setProgressInfo(requestCtx,progressStatus, ProgressStatus.END_UPLOAD, "100"); //设置状态
     }
 	
 	public Workbook makeExcel(IRequest requestCtx )throws Exception{
@@ -178,18 +207,32 @@ public class UploadExcelServiceImpl extends BaseServiceImpl<Orders> implements I
 				   "快递单号","快递公司","快递公司","送货文件类别","账户已激活卡片被保护",
 				   "代领人姓名","代领人姓名","订单状态","备注","型号","订单属性",
 				   "物流名称","物流单号","发货时间","备注说明","订单批次","银行反馈时间","银行反馈分类","银行反馈说明"};
-	    List<Orders> orderlist =   iOrdersService.queryAll(requestCtx);
-		List<Map<String, Object>> listmap = createExcelRecord(orderlist);
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("sheetName", "sheet1");
-        listmap.add(map);
+	  
 		String keys[]  = {"orderNo","bBranchName","cMerchantName","dAuthorizedOperator","eMarketingPersonnelCode","fRecommendedPersonnelCode","gCustomerName",
 				"hCardLastFourNumber","iCertificatesLastFiveNumber","jContactNumber","kTelphone","lDeliveryAddress","mZipCode","nInvoiceHeader",
 				"oCommodityNumber","pCommodityPrice","qApplicationNumber","rAuthorizationCode","sProductNumber","tCustomerOrderDate","uActualDeliveryDate",
 				"vCourierNumber","wCourierServicesCompany","xOverdueMark","yDeliveryFileCategory","zCardProduct","aaNameOfAgent","abTelphoneOfAgent",
 				"acOrderStatus","adBz","aeModel","afOrderAttribute","agLogisticsName","ahLogisticsNo","aiDeliveryTime",
 				"ajBz","akOrderBatch","alBankFeedbackTime","amBankFeedbackType","anBankFeedbackInstruction"};//map中的key
-		return ExcelUtil.createWorkBook(listmap, keys, columnNames);
+		
+		List<List<Map<String,Object>>> list = new ArrayList<List<Map<String,Object>>>();
+		List<Orders> orderlist =   iOrdersService.queryAll(requestCtx);
+		List<Map<String, Object>> listmap1 = createExcelRecord(orderlist);
+		list.add(listmap1);
+		
+		List<Map<String, Object>> listmap2 = new ArrayList<Map<String, Object>>();
+		Map<String, Object> map2 = new HashMap<String, Object>();
+		map2.put("sheetName", "sheet2");
+		listmap2.add(map2);
+		list.add(listmap2);
+		
+		List<Map<String, Object>> listmap3 = new ArrayList<Map<String, Object>>();
+		Map<String, Object> map3 = new HashMap<String, Object>();
+		map3.put("sheetName", "sheet3");
+		listmap3.add(map3);
+		list.add(listmap3);
+		
+		return ExcelUtil.createWorkBook(list, keys, columnNames);
 	}
 	
 	

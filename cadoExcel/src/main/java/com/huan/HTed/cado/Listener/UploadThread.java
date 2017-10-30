@@ -12,21 +12,19 @@ public class UploadThread implements Runnable{
 	
 	
 	private IRequest requestCtx;
-	private HttpSession session;
+	private ProgressStatus progressStatus;
 	private IUploadExcelService service;
 	private InputStream fileInputStream;
 	private String excelName;
-	private ProgressStatus progressStatus;
 	
 	
-	public UploadThread(IRequest requestCtx,HttpSession session,IUploadExcelService service, InputStream fileInputStream,String excelName, ProgressStatus progressStatus) {
+	public UploadThread(IRequest requestCtx,ProgressStatus progressStatus,IUploadExcelService service, InputStream fileInputStream,String excelName) {
 		super();
 		this.requestCtx = requestCtx;
-		this.session = session;
+		this.progressStatus = progressStatus;
 		this.service = service;
 		this.fileInputStream = fileInputStream;
 		this.excelName = excelName;
-		this.progressStatus = progressStatus;
 	}
 
 
@@ -37,7 +35,7 @@ public class UploadThread implements Runnable{
 	public void run() {
 		// TODO Auto-generated method stub
 		try {
-			service.fildUpload(requestCtx, session,fileInputStream,excelName);
+			service.fildUpload(requestCtx,progressStatus,fileInputStream,excelName);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -141,13 +141,14 @@
           	if(dataProgress.success==true){
 					if(dataProgress.progress==100){
 							disabledProgress();
+							alert("上传成功");
 					}else{
 						$("#test").html(dataProgress.status);
 						$("#test").width(dataProgress.progress+"%");
 					}
           	}else{
           		  disabledProgress();
-          		  alert(dataProgress.status);
+          		  alert("上传失败:"+dataProgress.status);
           	}
           },
           error:function(data){

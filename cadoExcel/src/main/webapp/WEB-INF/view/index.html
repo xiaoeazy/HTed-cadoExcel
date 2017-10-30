@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
 
-    <title>H+ 后台主题UI框架 - 主页</title>
+    <title>cadoExcel</title>
 
     <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
     <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
@@ -34,11 +34,17 @@
                 <ul class="nav" id="side-menu">
                     <li class="nav-header">
                         <div class="dropdown profile-element">
-                            <span><img alt="image" class="img-circle" src="img/profile_small.jpg" /></span>
+                            <span><img alt="image" class="img-circle" src="${base.contextPath}/resources/images/profile_small.jpg" /></span>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear">
-                               <span class="block m-t-xs"><strong class="font-bold">Beaut-zihan</strong></span>
-                                <span class="text-muted text-xs block">超级管理员<b class="caret"></b></span>
+                               <span class="block m-t-xs"><strong class="font-bold">${Session.userId}</strong></span>
+                                <span class="text-muted text-xs block">
+                                		<#if "${Session.userId}" == "10001">
+                                		超级管理员
+                                		<#else>
+                                		操作员
+                                		</#if>
+                                		<b class="caret"></b></span>
                                 </span>
                             </a>
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
@@ -56,19 +62,22 @@
                     <li>
                         <a class="J_menuItem" href="${base.contextPath}/main/main.html"><i class="fa fa-home"></i> <span class="nav-label">首页</span></a>
                     </li>
-                    
-                  	<li>
-                        <a class="J_menuItem" href="${base.contextPath}/upload/upload.html"><i class="fa fa-edit"></i> <span class="nav-label">导入</span></a>
-                    </li>
+                    <#if "${Session.userId}" == "10001">
+	                  	<li>
+	                        <a class="J_menuItem" href="${base.contextPath}/upload/upload.html"><i class="fa fa-edit"></i> <span class="nav-label">导入</span></a>
+	                    </li>
+                    </#if>
                     <li>
                         <a class="J_menuItem" href="${base.contextPath}/orders/orders.html"><i class="fa fa-desktop"></i> <span class="nav-label">订单</span></a>
                     </li>
+                    <#if "${Session.userId}" == "10001">
                     <li>
                         <a class="J_menuItem" href="${base.contextPath}/sys/sys_user.html"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">员工管理</span></a>
                     </li>
                     <li>
                         <a class="J_menuItem" href="${base.contextPath}/webconfig/webconfig.html"><i class="fa  fa-envelope"></i> <span class="nav-label">系统参数</span></a>
                     </li>
+                    </#if>
                 </ul>
             </div>
         </nav>

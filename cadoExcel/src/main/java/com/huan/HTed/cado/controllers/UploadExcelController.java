@@ -7,9 +7,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +18,8 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.task.TaskExecutor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,7 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.huan.HTed.cado.Listener.ProgressStatus;
 import com.huan.HTed.cado.Listener.UploadThread;
 import com.huan.HTed.cado.service.IUploadExcelService;
-import com.huan.HTed.cado.util.ExcelUtil;
+import com.huan.HTed.cado.service.impl.UploadExcelServiceImpl;
 import com.huan.HTed.core.IRequest;
 import com.huan.HTed.system.controllers.BaseController;
 import com.huan.HTed.system.dto.ResponseData;
@@ -42,6 +44,11 @@ public class UploadExcelController extends BaseController{
 
     private static int  i=0;
     
+    @Resource(name = "taskExecutor")  
+    private TaskExecutor taskExecutor;  
+    
+    @Autowired
+    private RedisTemplate<String, String> redisTemplate;
     
 //
 //    @RequestMapping(value="/upload/excel",method=RequestMethod.POST)  
@@ -78,16 +85,11 @@ public class UploadExcelController extends BaseController{
 			String path="";  
 			if(!file.isEmpty()){  
 				IRequest requestCtx = createRequestContext(request);
-				//service.fildUpload(requestCtx,file);
-				HttpSession session = request.getSession();
-
-		    	System.out.println("上传sessionId:"+session.getId());
+		    	
+		    	String excelName = getExcelName(file); //读取excel中的数据
 				ProgressStatus progressStatus = new ProgressStatus();
-				session.setAttribute("upload_progress", progressStatus);
-				
-				String excelName = getExcelName(file); //读取excel中的数据
-				Thread t = new Thread(new UploadThread(requestCtx,session,service, file.getInputStream(),excelName, progressStatus));
-		    	t.start();
+				service.startFileUpload(requestCtx, progressStatus, ProgressStatus.START_UPLOAD, "0");//为了改一个状态
+				taskExecutor.execute(new UploadThread(requestCtx,progressStatus,service, file.getInputStream(),excelName));
 		    	System.out.println(progressStatus.getStatus());
 			}
 			rd.setSuccess(true);
@@ -156,13 +158,26 @@ public class UploadExcelController extends BaseController{
     @RequestMapping(value="/upload/getFileUploadProgress",method=RequestMethod.POST)  
     @ResponseBody
     public ResponseData getFileUploadProgress(HttpServletRequest request){  
-    	HttpSession session = request.getSession();
-    	System.out.println("进度sessionId:"+session.getId());
-		ProgressStatus p = (ProgressStatus)session.getAttribute("upload_progress");
-		System.out.println(p.getStatus()+"  "+p.getProgress());
-		List<ProgressStatus> list = new ArrayList<ProgressStatus>();
-		list.add(p);
+    	IRequest requestCtx = createRequestContext(request);
+    	String info =(String)redisTemplate.opsForHash().get(UploadExcelServiceImpl.UPLOAD_PROGRESS,requestCtx.getUserId()+""); 
+    	
+    	
+    	List<ProgressStatus> list = new ArrayList<ProgressStatus>();
+    	if(info!=null){
+    		ProgressStatus progressStatus = new ProgressStatus();
+    		String[] str = info.split(":");
+    		progressStatus.setSuccess(Boolean.parseBoolean(str[0]));
+    		progressStatus.setProgress(str[1]);
+    		progressStatus.setStatus(str[2]);
+    		System.out.println(progressStatus.getStatus()+"  "+progressStatus.getProgress());
+    		list.add(progressStatus);
+    	}else{
+    		ProgressStatus p = new ProgressStatus();
+    		p.setSuccess(false);
+    		p.setStatus("出现异常!");
+    	}
+	
         return new ResponseData(list);
-    }  
+}  
   
 }

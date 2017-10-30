@@ -135,11 +135,13 @@ public class ExcelUtil {
     }  
       
     
-    public static Workbook createWorkBook(List<Map<String, Object>> list, String []keys, String columnNames[]) {
+    public static Workbook createWorkBook(List<List<Map<String,Object>>> list, String []keys, String columnNames[]) {
         // 创建excel工作簿
         Workbook wb = new XSSFWorkbook();
         // 创建第一个sheet（页），并命名
-        Sheet sheet = wb.createSheet(list.get(0).get("sheetName").toString());
+        Sheet sheet = wb.createSheet(list.get(0).get(0).get("sheetName").toString());
+        Sheet sheet2 = wb.createSheet(list.get(1).get(0).get("sheetName").toString());
+        Sheet sheet3 = wb.createSheet(list.get(2).get(0).get("sheetName").toString());
         //设置筛选
         CellRangeAddress AL = CellRangeAddress.valueOf("A1:AN1");
         sheet.setAutoFilter(AL);
@@ -209,10 +211,12 @@ public class ExcelUtil {
         for(int i=0;i<columnNames.length;i++){
             Cell cell = row.createCell(i);
             cell.setCellValue(columnNames[i]);
-            setCellStyle(i,cell,keys,cs,cs1,cs2,cs3,true);//==================================>>
+            setCellStyle(cs, cs1, cs2, cs3, cell, i, true);
         }
+          
+         
         //设置每行每列的值
-        for (short i = 1; i < list.size(); i++) {
+        for (short i = 1; i < list.get(0).size(); i++) {
             // Row 行,Cell 方格 , Row 和 Cell 都是从0开始计数的
             // 创建一行，在页sheet上
             Row row1 = sheet.createRow((short) i);
@@ -220,8 +224,8 @@ public class ExcelUtil {
             // 在row行上创建一个方格
             for(short j=0;j<keys.length;j++){
                 Cell cell = row1.createCell(j);
-                cell.setCellValue(list.get(i).get(keys[j]) == null?" ": list.get(i).get(keys[j]).toString());
-                setCellStyle(j,cell,keys,cs,cs1,cs2,cs3,false);//==================================>>
+                cell.setCellValue(list.get(0).get(i).get(keys[j]) == null?" ": list.get(0).get(i).get(keys[j]).toString());
+                setCellStyle(cs, cs1, cs2, cs3, cell, j, false);
             }
         }
         return wb;
@@ -380,17 +384,153 @@ public class ExcelUtil {
 				break;
 		}
 	}
-    private static void setCellStyle(int j ,Cell cell,String [] keys,CellStyle cs,CellStyle cs1,CellStyle cs2,CellStyle cs3,boolean isTitle){
-    	 if(j<=29){
-    		if(isTitle)
-    			cell.setCellStyle(cs1);
-    		else
-    			cell.setCellStyle(cs);
-    	 }else if(j<=36&&j>29){
-			cell.setCellStyle(cs2);
-         }else{
-         	cell.setCellStyle(cs3);
-         }
-    	// cell.setWrapText(true);
-    }
+	
+	
+	private static void set0to29(Cell cell,CellStyle cs,CellStyle cs1,boolean isTitle){
+		if(isTitle)
+			cell.setCellStyle(cs1);
+		else
+			cell.setCellStyle(cs);
+	}
+	
+	private static void set30to36(Cell cell,CellStyle cs2,boolean isWrap){
+		cs2.setWrapText(isWrap);  
+		cell.setCellStyle(cs2);
+	}
+	
+	private static void set37to39(Cell cell,CellStyle cs3,boolean isWrap){
+		cs3.setWrapText(isWrap);  
+		cell.setCellStyle(cs3);
+		
+	}
+	
+	private static void setCellStyle( CellStyle cs,CellStyle cs1,CellStyle cs2,CellStyle cs3,Cell cell ,int i,boolean isTitle){
+		switch(i){
+			case 0://a
+				set0to29(cell, cs, cs1, isTitle);
+				break;
+			case 1://b
+				set0to29(cell, cs, cs1, isTitle);
+				break;
+			case 2://c
+				set0to29(cell, cs, cs1, isTitle);
+				break;
+			case 3://d
+				set0to29(cell, cs, cs1, isTitle);
+				break;
+			case 4://e
+				set0to29(cell, cs, cs1, isTitle);
+				break;
+			case 5://f
+				set0to29(cell, cs, cs1, isTitle);
+				break;
+			case 6://g
+				set0to29(cell, cs, cs1, isTitle);
+				break;
+			case 7://h
+				set0to29(cell, cs, cs1, isTitle);
+				break;
+			case 8://i
+				set0to29(cell, cs, cs1, isTitle);
+				break;
+			case 9://j
+				set0to29(cell, cs, cs1, isTitle);
+				break;
+			case 10://k
+				set0to29(cell, cs, cs1, isTitle);
+				break;
+			case 11://l
+				set0to29(cell, cs, cs1, isTitle);
+				break;
+			case 12://m
+				set0to29(cell, cs, cs1, isTitle);
+				break;
+			case 13://n
+				set0to29(cell, cs, cs1, isTitle);
+				break;
+			case 14://o
+				set0to29(cell, cs, cs1, isTitle);
+				break;
+			case 15://p
+				set0to29(cell, cs, cs1, isTitle);
+				break;
+			case 16://q
+				set0to29(cell, cs, cs1, isTitle);
+				break;
+			case 17://r
+				set0to29(cell, cs, cs1, isTitle);
+				break;
+			case 18://s
+				set0to29(cell, cs, cs1, isTitle);
+				break;
+			case 19://t
+				set0to29(cell, cs, cs1, isTitle);
+				break;
+			case 20://u
+				set0to29(cell, cs, cs1, isTitle);
+				break;
+			case 21://v
+				set0to29(cell, cs, cs1, isTitle);
+				break;
+			case 22://w
+				set0to29(cell, cs, cs1, isTitle);
+				break;
+			case 23://x
+				set0to29(cell, cs, cs1, isTitle);
+				break;
+			case 24://y
+				set0to29(cell, cs, cs1, isTitle);
+				break;
+			case 25://z
+				set0to29(cell, cs, cs1, isTitle);
+				break;
+			case 26://aa
+				set0to29(cell, cs, cs1, isTitle);
+				break;
+			case 27://ab
+				set0to29(cell, cs, cs1, isTitle);
+				break;
+			case 28://ac
+				set0to29(cell, cs, cs1, isTitle);
+				break;
+			case 29://ad
+				set0to29(cell, cs, cs1, isTitle);
+				break;
+			case 30://ae
+				set30to36(cell,cs2,true);
+				break;
+			case 31://af
+				set30to36(cell,cs2,false);
+				break;
+			case 32://ag
+				set30to36(cell,cs2,false);
+				break;
+			case 33://ah
+				set30to36(cell,cs2,false);
+				break;
+			case 34://ai
+				set30to36(cell,cs2,false);
+				break;
+			case 35://aj
+				set30to36(cell,cs2,false);
+				break;
+			case 36://ak
+				set30to36(cell,cs2,false);
+				break;
+			case 37://al
+				set37to39(cell, cs3,false);
+				break;
+			case 38://am
+				set37to39(cell, cs3,false);
+				break;
+			case 39://an
+				set37to39(cell, cs3,true);
+				break;
+			default:
+				
+				break;
+		}
+	}
+	
+
 }  
